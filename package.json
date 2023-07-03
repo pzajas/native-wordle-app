@@ -3,9 +3,14 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "eslint --ext .tsx --ext .ts app/",
+    "format": "prettier --write ./app"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/react": "~18.0.27",
+    "@types/react-native": "^0.72.2",
     "expo": "^48.0.7",
     "expo-constants": "~14.2.1",
     "expo-linking": "~4.0.1",
@@ -14,16 +19,24 @@
     "expo-status-bar": "~1.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.71.3",
+    "react-native": "0.71.8",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-reanimated": "~2.14.4",
     "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
-    "react-native-web": "~0.18.7"
+    "react-native-web": "~0.18.7",
+    "typescript": "^4.9.4"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
-    "@babel/plugin-proposal-export-namespace-from": "^7.18.9"
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@typescript-eslint/eslint-plugin": "^5.60.1",
+    "@typescript-eslint/parser": "^5.60.1",
+    "eslint": "^8.43.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.8.8"
   },
   "resolutions": {
     "metro": "^0.73.7",
