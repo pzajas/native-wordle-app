@@ -1,23 +1,24 @@
-import React, { useState } from 'react'
+import { FunctionComponent, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { GameProps } from '../src/typescript/types'
+
 import UserInput from './UserInput'
 
-const Game = () => {
-  const [check, setCheck] = useState(false)
+const Game: FunctionComponent<GameProps> = ({
+  randomWord,
+}) => {
+  const [checkWord, setCheckWord] = useState(false)
 
   const renderUserInputs = () => {
-    const inputs = []
-
-    for (let i = 0; i < 5; i++) {
-      inputs.push(
-        <UserInput
-          key={i}
-          index={i}
-          check={check}
-          setCheck={setCheck}
-        />
-      )
-    }
+    const inputs = Array.from({ length: 5 }, (_, i) => (
+      <UserInput
+        key={i}
+        index={i}
+        checkWord={checkWord}
+        setCheckWord={setCheckWord}
+        randomWord={randomWord}
+      />
+    ))
 
     return inputs
   }

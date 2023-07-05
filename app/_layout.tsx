@@ -4,7 +4,7 @@ export default function AppLayout() {
   return (
     <Tabs>
       <Tabs.Screen
-        name="index"
+        name="App"
         options={{
           title: 'Wordle',
           headerTitleAlign: 'center',

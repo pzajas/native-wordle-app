@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import { FunctionComponent, useState } from 'react'
+import { UserInputProps } from '../src/typescript/types'
+
 import {
   StyleSheet,
   View,
@@ -6,53 +8,42 @@ import {
   TextStyle,
 } from 'react-native'
 
-interface UserInputProps {
-  index: number
-  check: boolean
-  setCheck: (value: boolean) => void
-}
-
-const UserInput: React.FC<UserInputProps> = ({
+const UserInput: FunctionComponent<UserInputProps> = ({
   index,
-  check,
-  setCheck,
+  checkWord,
+  setCheckWord,
+  randomWord,
 }) => {
   const [input, setInput] = useState('')
-
   const [match, setMatch] = useState(false)
   const [present, setPresent] = useState(false)
 
-  const randomWord = 'TIGER'
-
   const handleCheck = (text: string) => {
-    setInput(text)
+    const uppercaseText = text.toUpperCase()
+    setInput(uppercaseText)
 
-    if (
-      text.toUpperCase() === randomWord[index].toUpperCase()
-    ) {
+    if (uppercaseText === randomWord[index]) {
       setMatch(true)
-    } else if (randomWord.includes(text.toUpperCase())) {
+    } else if (randomWord.includes(uppercaseText)) {
       setPresent(true)
     }
 
     if (index === 4) {
-      setCheck(true)
+      setCheckWord(true)
     }
   }
 
-  const inputStyles: TextStyle[] = [
-    styles.input,
-    match && check ? styles.match : null,
-    present && check ? styles.present : null,
-  ].filter(Boolean) as TextStyle[]
+  const inputStyles: TextStyle = {
+    ...styles.input,
+    ...(match && checkWord && styles.match),
+    ...(present && checkWord && styles.present),
+  }
 
   return (
     <View>
       <TextInput
         value={input}
-        onChangeText={(text) =>
-          handleCheck(text.toUpperCase())
-        }
+        onChangeText={(text) => handleCheck(text)}
         style={inputStyles}
         maxLength={1}
       />
