@@ -1,8 +1,9 @@
 export type UserInputProps = {
   index: number
   checkWord: boolean
-  setCheckWord: (value: boolean) => void
   randomWord: string
+
+  setCheckWord: (value: boolean) => void
 }
 
 export type GameProps = {

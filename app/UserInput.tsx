@@ -6,6 +6,8 @@ import {
   View,
   TextInput,
   TextStyle,
+  NativeSyntheticEvent,
+  TextInputKeyPressEventData,
 } from 'react-native'
 
 const UserInput: FunctionComponent<UserInputProps> = ({
@@ -27,8 +29,12 @@ const UserInput: FunctionComponent<UserInputProps> = ({
     } else if (randomWord.includes(uppercaseText)) {
       setPresent(true)
     }
+  }
 
-    if (index === 4) {
+  const handleKeyPress = (
+    event: NativeSyntheticEvent<TextInputKeyPressEventData>
+  ) => {
+    if (event.nativeEvent.key === 'Enter') {
       setCheckWord(true)
     }
   }
@@ -46,6 +52,7 @@ const UserInput: FunctionComponent<UserInputProps> = ({
         onChangeText={(text) => handleCheck(text)}
         style={inputStyles}
         maxLength={1}
+        onKeyPress={handleKeyPress}
       />
     </View>
   )
