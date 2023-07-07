@@ -12,8 +12,10 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(CONST.API_URL)
-        setRandomWord(response?.data[0])
+        const response = await axios.get(
+          'https://polish-wordle-api.onrender.com/words/random_word'
+        )
+        setRandomWord(response?.data)
       } catch (error) {
         console.error(CONST.API_ERROR, error)
       }
