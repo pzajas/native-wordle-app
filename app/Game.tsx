@@ -8,6 +8,7 @@ const Game: FunctionComponent<GameProps> = ({
   randomWord,
 }) => {
   const [checkWord, setCheckWord] = useState(false)
+  const [guessWord, setGuessWord] = useState<string[]>([])
 
   const renderUserInputs = () => {
     const inputs = Array.from({ length: 5 }, (_, i) => (
@@ -17,6 +18,8 @@ const Game: FunctionComponent<GameProps> = ({
         checkWord={checkWord}
         setCheckWord={setCheckWord}
         randomWord={randomWord}
+        guessWord={guessWord}
+        setGuessWord={setGuessWord}
       />
     ))
 
