@@ -6,6 +6,8 @@ import {
   View,
   TextInput,
   TextStyle,
+  NativeSyntheticEvent,
+  TextInputKeyPressEventData,
 } from 'react-native'
 import axios, { AxiosResponse } from 'axios'
 
@@ -21,11 +23,25 @@ const UserInput: FunctionComponent<UserInputProps> = ({
   const [match, setMatch] = useState(false)
   const [present, setPresent] = useState(false)
 
+  const handleBackspace = (
+    e: NativeSyntheticEvent<TextInputKeyPressEventData>
+  ) => {
+    if (e.nativeEvent.key === 'Backspace') {
+      setGuessWord((prevState: string[]) => {
+        const newArray = [...prevState]
+        newArray.pop()
+        return newArray
+      })
+    }
+  }
+
   const handleCheck = (text: string) => {
     const uppercaseText = text.toUpperCase()
     setInput(uppercaseText)
 
-    setGuessWord([...guessWord, text])
+    if (text !== '') {
+      setGuessWord([...guessWord, text])
+    }
 
     if (uppercaseText === randomWord[index]) {
       setMatch(true)
@@ -39,16 +55,15 @@ const UserInput: FunctionComponent<UserInputProps> = ({
     }
   }
 
-  const handleKeyPress: any = async (): Promise<void> => {
+  const handleSubmit: any = async (): Promise<void> => {
     const secretWord = guessWord.join('').toUpperCase()
 
     try {
       await axios.get(
         `https://polish-wordle-api.onrender.com/words/${secretWord.toLowerCase()}/word_exists`
       )
-
-      if (secretWord === randomWord) {
-        setCheckWord(true)
+      setCheckWord(true)
+      if (secretWord.toUpperCase() === randomWord) {
         setTimeout(() => {
           if (randomWord === secretWord) {
             console.log('win')
@@ -74,7 +89,8 @@ const UserInput: FunctionComponent<UserInputProps> = ({
         onChangeText={(text) => handleCheck(text)}
         style={inputStyles}
         maxLength={1}
-        onSubmitEditing={handleKeyPress}
+        onKeyPress={handleBackspace}
+        onSubmitEditing={handleSubmit}
       />
     </View>
   )
