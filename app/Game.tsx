@@ -26,8 +26,6 @@ const Game: FunctionComponent<GameProps> = ({
     return inputs
   }
 
-  console.log(guessWord)
-
   return (
     <View style={styles.container}>
       {renderUserInputs()}

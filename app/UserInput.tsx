@@ -9,7 +9,7 @@ import {
   NativeSyntheticEvent,
   TextInputKeyPressEventData,
 } from 'react-native'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 
 const UserInput: FunctionComponent<UserInputProps> = ({
   index,
