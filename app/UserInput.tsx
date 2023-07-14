@@ -55,7 +55,7 @@ const UserInput: FunctionComponent<UserInputProps> = ({
     }
   }
 
-  const handleSubmit: any = async (): Promise<void> => {
+  const handleSubmit: () => Promise<void> = async () => {
     const secretWord = guessWord.join('').toUpperCase()
 
     try {
@@ -72,7 +72,7 @@ const UserInput: FunctionComponent<UserInputProps> = ({
       }
     } catch (error) {
       setCheckWord(true)
-      console.log('no word')
+      console.log('There is no such word in dictionary!')
     }
   }
 
