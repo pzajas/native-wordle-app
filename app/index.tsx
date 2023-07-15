@@ -23,10 +23,9 @@ const App = () => {
 
     void fetchData()
   }, [])
-
   return (
     <View style={styles.container}>
-      {Array.from({ length: 6 }).map((_, index) => (
+      {Array.from({ length: 1 }).map((_, index) => (
         <Game
           key={index}
           randomWord={randomWord.toUpperCase()}

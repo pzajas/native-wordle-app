@@ -1,14 +1,18 @@
-import { FunctionComponent, useState } from 'react'
-import { UserInputProps } from '../src/typescript/types'
-
+import {
+  FunctionComponent,
+  useState,
+  useEffect,
+  useRef,
+} from 'react'
 import {
   StyleSheet,
   View,
   TextInput,
-  TextStyle,
   NativeSyntheticEvent,
   TextInputKeyPressEventData,
 } from 'react-native'
+
+import { UserInputProps } from '../src/typescript/types'
 import axios from 'axios'
 
 const UserInput: FunctionComponent<UserInputProps> = ({
@@ -22,6 +26,8 @@ const UserInput: FunctionComponent<UserInputProps> = ({
   const [input, setInput] = useState('')
   const [match, setMatch] = useState(false)
   const [present, setPresent] = useState(false)
+
+  const inputRef = useRef<TextInput>(null)
 
   const handleBackspace = (
     e: NativeSyntheticEvent<TextInputKeyPressEventData>
@@ -76,17 +82,24 @@ const UserInput: FunctionComponent<UserInputProps> = ({
     }
   }
 
-  const inputStyles: TextStyle = {
-    ...styles.input,
-    ...(match && checkWord && styles.match),
-    ...(present && checkWord && styles.present),
-  }
+  const inputStyles = [
+    styles.input,
+    match && checkWord && styles.match,
+    present && checkWord && styles.present,
+  ]
+
+  useEffect(() => {
+    if (index === 0 && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [index])
 
   return (
     <View>
       <TextInput
+        ref={inputRef}
         value={input}
-        onChangeText={(text) => handleCheck(text)}
+        onChangeText={handleCheck}
         style={inputStyles}
         maxLength={1}
         onKeyPress={handleBackspace}
