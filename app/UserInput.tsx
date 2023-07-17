@@ -45,20 +45,24 @@ const UserInput: FunctionComponent<UserInputProps> = ({
     const uppercaseText = text.toUpperCase()
     setInput(uppercaseText)
 
-    if (text !== '') {
-      setGuessWord([...guessWord, text])
+    if (index === 0) {
+      inputRef.current?.focus()
     }
 
-    if (uppercaseText === randomWord[index]) {
-      setMatch(true)
-      setPresent(false)
-    } else if (randomWord.includes(uppercaseText)) {
-      setPresent(true)
-      setMatch(false)
-    } else {
-      setMatch(false)
-      setPresent(false)
-    }
+    // if (text !== '') {
+    //   setGuessWord([...guessWord, text])
+    // }
+
+    // if (uppercaseText === randomWord[index]) {
+    //   setMatch(true)
+    //   setPresent(false)
+    // } else if (randomWord.includes(uppercaseText)) {
+    //   setPresent(true)
+    //   setMatch(false)
+    // } else {
+    //   setMatch(false)
+    //   setPresent(false)
+    // }
   }
 
   const handleSubmit: () => Promise<void> = async () => {
