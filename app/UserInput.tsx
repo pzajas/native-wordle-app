@@ -1,132 +1,156 @@
-import {
-  FunctionComponent,
-  useState,
-  useEffect,
-  useRef,
-} from 'react'
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  NativeSyntheticEvent,
-  TextInputKeyPressEventData,
-} from 'react-native'
+import React, { useRef, useState, useEffect } from 'react'
+import { View, TextInput, StyleSheet } from 'react-native'
+import { useForm, Controller } from 'react-hook-form'
 
-import { UserInputProps } from '../src/typescript/types'
-import axios from 'axios'
+const UserInput = ({ randomWord }) => {
+  const { control, handleSubmit, reset } = useForm()
+  const fieldRefs = useRef(
+    Array.from({ length: 30 }, () => null)
+  ) // Initialize with null values
+  const [guessWord, setGuessWord] = useState([])
+  const [letterExistState, setLetterExistState] = useState(
+    Array.from({ length: 30 }, () => false)
+  )
+  const [letterMatchState, setLetterMatchState] = useState(
+    Array.from({ length: 30 }, () => false)
+  )
 
-const UserInput: FunctionComponent<UserInputProps> = ({
-  index,
-  checkWord,
-  setCheckWord,
-  randomWord,
-  guessWord,
-  setGuessWord,
-}) => {
-  const [input, setInput] = useState('')
-  const [match, setMatch] = useState(false)
-  const [present, setPresent] = useState(false)
+  const excludedIndices = [4, 9, 14, 19, 24, 29]
 
-  const inputRef = useRef<TextInput>(null)
-
-  const handleBackspace = (
-    e: NativeSyntheticEvent<TextInputKeyPressEventData>
-  ) => {
-    if (e.nativeEvent.key === 'Backspace') {
-      setGuessWord((prevState: string[]) => {
-        const newArray = [...prevState]
-        newArray.pop()
-        return newArray
-      })
-    }
-  }
-
-  const handleCheck = (text: string) => {
-    const uppercaseText = text.toUpperCase()
-    setInput(uppercaseText)
-
-    if (index === 0) {
-      inputRef.current?.focus()
-    }
-
-    // if (text !== '') {
-    //   setGuessWord([...guessWord, text])
-    // }
-
-    // if (uppercaseText === randomWord[index]) {
-    //   setMatch(true)
-    //   setPresent(false)
-    // } else if (randomWord.includes(uppercaseText)) {
-    //   setPresent(true)
-    //   setMatch(false)
-    // } else {
-    //   setMatch(false)
-    //   setPresent(false)
-    // }
-  }
-
-  const handleSubmit: () => Promise<void> = async () => {
-    const secretWord = guessWord.join('').toUpperCase()
-
-    try {
-      await axios.get(
-        `https://polish-wordle-api.onrender.com/words/${secretWord.toLowerCase()}/word_exists`
-      )
-      setCheckWord(true)
-      if (secretWord.toUpperCase() === randomWord) {
-        setTimeout(() => {
-          if (randomWord === secretWord) {
-            console.log('win')
-          }
-        }, 500)
-      }
-    } catch (error) {
-      setCheckWord(true)
-      console.log('There is no such word in dictionary!')
-    }
-  }
-
-  const inputStyles = [
-    styles.input,
-    match && checkWord && styles.match,
-    present && checkWord && styles.present,
-  ]
+  const fields = Array.from({ length: 30 }, (_, index) => ({
+    name: `field${index + 1}`,
+    ref: useRef(),
+    nextField: index + 1 === 30 ? null : index + 1,
+  }))
 
   useEffect(() => {
-    if (index === 0 && inputRef.current) {
-      inputRef.current.focus()
+    fields[0].ref.current.focus()
+  }, [])
+
+  useEffect(() => {
+    // After rendering, update the fieldRefs array with the correct refs
+    fieldRefs.current = fieldRefs.current.map(
+      (ref, index) => fields[index].ref.current
+    )
+  }, [fields])
+
+  const onNextField = (nextField) => {
+    if (nextField === 0) {
+      fieldRefs.current[nextField].focus() // Special case for the first field
+    } else if (nextField < fields.length) {
+      fieldRefs.current[nextField].focus()
     }
-  }, [index])
+  }
+
+  const handlePress = (index) => {
+    const isWinner = randomWord === guessWord.join('')
+
+    if (!isWinner && index < fields.length - 1) {
+      fieldRefs.current[index + 1].focus()
+      setGuessWord([])
+    }
+    if (isWinner) {
+      alert('Win')
+      setGuessWord([])
+      reset()
+    }
+  }
+
+  console.log(randomWord)
 
   return (
-    <View>
-      <TextInput
-        ref={inputRef}
-        value={input}
-        onChangeText={handleCheck}
-        style={inputStyles}
-        maxLength={1}
-        onKeyPress={handleBackspace}
-        onSubmitEditing={handleSubmit}
-      />
+    <View style={styles.container}>
+      {fields.map((field, index) => (
+        <Controller
+          key={field.name}
+          control={control}
+          render={({
+            field: { onChange, onBlur, value },
+          }) => (
+            <TextInput
+              style={[
+                styles.input,
+                {
+                  backgroundColor: (() => {
+                    if (letterMatchState[index])
+                      return 'green'
+                    if (letterExistState[index])
+                      return 'yellow'
+                    return 'grey'
+                  })(),
+                },
+              ]}
+              onChangeText={(text) => {
+                onChange(text)
+                if (!excludedIndices.includes(index)) {
+                  onNextField(field.nextField)
+                }
+
+                // Update letterExistState
+                setLetterExistState(
+                  (prevLetterExistState) => {
+                    const newLetterExistState = [
+                      ...prevLetterExistState,
+                    ]
+                    newLetterExistState[index] =
+                      randomWord.includes(text)
+                    return newLetterExistState
+                  }
+                )
+
+                setLetterMatchState(
+                  (prevLetterMatchState) => {
+                    const newLetterMatchState = [
+                      ...prevLetterMatchState,
+                    ]
+                    newLetterMatchState[index] =
+                      randomWord[index] === text
+                    return newLetterMatchState
+                  }
+                )
+
+                setGuessWord((prevGuessWord) => {
+                  const newGuessWord = [...prevGuessWord]
+                  newGuessWord[index] = text
+                  return newGuessWord
+                })
+              }}
+              onBlur={onBlur}
+              value={value}
+              maxLength={1}
+              ref={(ref) => {
+                fieldRefs.current[index] = ref
+                field.ref.current = ref
+              }}
+              onSubmitEditing={() => handlePress(index)}
+            />
+          )}
+          name={field.name}
+          rules={{ required: true }}
+          defaultValue=""
+        />
+      ))}
     </View>
   )
 }
 
-export default UserInput
-
 const styles = StyleSheet.create({
+  container: {
+    width: 250,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+    gap: 5,
+  },
   input: {
-    backgroundColor: '#808080',
-    color: 'white',
     width: 40,
     height: 40,
-    textAlign: 'center',
-  },
-  match: {
-    backgroundColor: 'green',
-  },
-  present: {
-    backgroundColor: 'brown',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'gray',
   },
 })
+
+export default UserInput

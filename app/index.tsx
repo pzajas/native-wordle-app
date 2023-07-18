@@ -3,12 +3,11 @@ import { StyleSheet, View } from 'react-native'
 
 import { CONST } from '../src/utils/constants'
 
-import Game from './Game'
 import axios from 'axios'
+import UserInput from './UserInput'
 
 const App = () => {
   const [randomWord, setRandomWord] = useState('')
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,12 +24,7 @@ const App = () => {
   }, [])
   return (
     <View style={styles.container}>
-      {Array.from({ length: 1 }).map((_, index) => (
-        <Game
-          key={index}
-          randomWord={randomWord.toUpperCase()}
-        />
-      ))}
+      <UserInput randomWord={randomWord} />
     </View>
   )
 }
