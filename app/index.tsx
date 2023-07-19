@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import { CONST } from '../src/utils/constants'
 
 import axios from 'axios'
 import UserInput from './UserInput'
+import UserInputs from './UserInputs'
 
 const App = () => {
   const [randomWord, setRandomWord] = useState('')
+
+  const inputRef = useRef()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -24,7 +27,7 @@ const App = () => {
   }, [])
   return (
     <View style={styles.container}>
-      <UserInput randomWord={randomWord} />
+      <UserInputs randomWord={randomWord} />
     </View>
   )
 }

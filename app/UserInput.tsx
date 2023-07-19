@@ -1,156 +1,108 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { View, TextInput, StyleSheet } from 'react-native'
-import { useForm, Controller } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
+import { View, StyleSheet, TextInput } from 'react-native'
+import { useEffect, useState } from 'react'
 
-const UserInput = ({ randomWord }) => {
-  const { control, handleSubmit, reset } = useForm()
-  const fieldRefs = useRef(
-    Array.from({ length: 30 }, () => null)
-  ) // Initialize with null values
-  const [guessWord, setGuessWord] = useState([])
-  const [letterExistState, setLetterExistState] = useState(
-    Array.from({ length: 30 }, () => false)
-  )
-  const [letterMatchState, setLetterMatchState] = useState(
-    Array.from({ length: 30 }, () => false)
-  )
+type FormValues = {
+  firstName: string
+}
+const UserInput = ({
+  randomWord,
+  inputRef,
+  name,
+  guess,
+  setGuess,
+  secondRef,
+  thirdRef,
+  fourthRef,
+  fifthRef,
+}) => {
+  const [isMatch, setIsMatch] = useState(false)
+  const [isPresent, setIsPresent] = useState(false)
 
-  const excludedIndices = [4, 9, 14, 19, 24, 29]
+  const { register, handleSubmit, setFocus, control } =
+    useForm<FormValues>()
 
-  const fields = Array.from({ length: 30 }, (_, index) => ({
-    name: `field${index + 1}`,
-    ref: useRef(),
-    nextField: index + 1 === 30 ? null : index + 1,
-  }))
+  // useEffect(() => {
+  //   inputRef?.current.focus()
+  // }, [inputRef])
 
   useEffect(() => {
-    fields[0].ref.current.focus()
-  }, [])
-
-  useEffect(() => {
-    // After rendering, update the fieldRefs array with the correct refs
-    fieldRefs.current = fieldRefs.current.map(
-      (ref, index) => fields[index].ref.current
-    )
-  }, [fields])
-
-  const onNextField = (nextField) => {
-    if (nextField === 0) {
-      fieldRefs.current[nextField].focus() // Special case for the first field
-    } else if (nextField < fields.length) {
-      fieldRefs.current[nextField].focus()
+    if (guess.length === 0) {
+      inputRef?.current?.focus()
+    } else if (guess.length === 1) {
+      secondRef?.current?.focus()
+    } else if (guess.length === 2) {
+      thirdRef?.current?.focus()
+    } else if (guess.length === 3) {
+      fourthRef?.current?.focus()
+    } else if (guess.length === 4) {
+      fifthRef?.current?.focus()
     }
+  }, [guess])
+
+  const handleCheck = (text) => {
+    const updatedGuess = [...guess, text]
+    setGuess(updatedGuess)
+
+    for (let i = 0; i < updatedGuess.length; i++) {
+      updatedGuess[i] && randomWord[i] === updatedGuess[i]
+        ? setIsMatch(true)
+        : setIsMatch(false)
+    }
+
+    updatedGuess && randomWord.includes(text)
+      ? setIsPresent(true)
+      : setIsPresent(false)
   }
-
-  const handlePress = (index) => {
-    const isWinner = randomWord === guessWord.join('')
-
-    if (!isWinner && index < fields.length - 1) {
-      fieldRefs.current[index + 1].focus()
-      setGuessWord([])
-    }
-    if (isWinner) {
-      alert('Win')
-      setGuessWord([])
-      reset()
-    }
-  }
-
-  console.log(randomWord)
 
   return (
-    <View style={styles.container}>
-      {fields.map((field, index) => (
-        <Controller
-          key={field.name}
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-          }) => (
-            <TextInput
-              style={[
-                styles.input,
-                {
-                  backgroundColor: (() => {
-                    if (letterMatchState[index])
-                      return 'green'
-                    if (letterExistState[index])
-                      return 'yellow'
-                    return 'grey'
-                  })(),
-                },
-              ]}
-              onChangeText={(text) => {
-                onChange(text)
-                if (!excludedIndices.includes(index)) {
-                  onNextField(field.nextField)
-                }
-
-                // Update letterExistState
-                setLetterExistState(
-                  (prevLetterExistState) => {
-                    const newLetterExistState = [
-                      ...prevLetterExistState,
-                    ]
-                    newLetterExistState[index] =
-                      randomWord.includes(text)
-                    return newLetterExistState
-                  }
-                )
-
-                setLetterMatchState(
-                  (prevLetterMatchState) => {
-                    const newLetterMatchState = [
-                      ...prevLetterMatchState,
-                    ]
-                    newLetterMatchState[index] =
-                      randomWord[index] === text
-                    return newLetterMatchState
-                  }
-                )
-
-                setGuessWord((prevGuessWord) => {
-                  const newGuessWord = [...prevGuessWord]
-                  newGuessWord[index] = text
-                  return newGuessWord
-                })
-              }}
-              onBlur={onBlur}
-              value={value}
-              maxLength={1}
-              ref={(ref) => {
-                fieldRefs.current[index] = ref
-                field.ref.current = ref
-              }}
-              onSubmitEditing={() => handlePress(index)}
-            />
-          )}
-          name={field.name}
-          rules={{ required: true }}
-          defaultValue=""
-        />
-      ))}
+    <View
+      style={{
+        flexDirection: 'row',
+        gap: 10,
+      }}
+    >
+      <Controller
+        name={name}
+        control={control}
+        render={({ field: { onChange, onBlur } }) => (
+          <TextInput
+            {...register(name)}
+            ref={
+              name === 'firstName'
+                ? inputRef
+                : name === '2'
+                ? secondRef
+                : name === '3'
+                ? thirdRef
+                : name === '4'
+                ? fourthRef
+                : name === '5'
+                ? fifthRef
+                : null
+            }
+            style={{
+              width: 40,
+              height: 40,
+              backgroundColor: isMatch
+                ? 'green'
+                : isPresent
+                ? 'yellow'
+                : isPresent && isMatch
+                ? 'green'
+                : 'grey',
+              borderWidth: 1,
+            }}
+            onChangeText={(text) => {
+              handleCheck(text)
+            }}
+            maxLength={1}
+          />
+        )}
+        rules={{ required: true }}
+      />
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: 250,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 5,
-    gap: 5,
-  },
-  input: {
-    width: 40,
-    height: 40,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
-  },
-})
 
 export default UserInput
