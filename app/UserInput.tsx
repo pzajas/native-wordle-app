@@ -15,6 +15,8 @@ const UserInput = ({
   thirdRef,
   fourthRef,
   fifthRef,
+  isSubmitted,
+  setIsSubmitted,
 }) => {
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
@@ -67,6 +69,15 @@ const UserInput = ({
     setIsPresent(false)
   }
 
+  const handleSubmit = (e) => {
+    if (
+      e.nativeEvent.key === 'Enter' &&
+      guess.length === 5
+    ) {
+      setIsSubmitted(true)
+    }
+  }
+
   console.log(guess)
 
   return (
@@ -98,20 +109,23 @@ const UserInput = ({
             style={{
               width: 40,
               height: 40,
-              backgroundColor: isMatch
-                ? 'green'
-                : isPresent
-                ? 'yellow'
-                : isPresent && isMatch
-                ? 'green'
-                : 'grey',
-              borderWidth: 1,
+              backgroundColor:
+                isMatch && isSubmitted
+                  ? 'green'
+                  : isPresent && isSubmitted
+                  ? 'yellow'
+                  : isPresent && isMatch && isSubmitted
+                  ? 'green'
+                  : 'grey',
+              borderRadius: 4,
+              textAlign: 'center',
             }}
             onChangeText={(text) => {
               handleCheck(text)
             }}
             onKeyPress={handleKeyPress}
             onFocus={handleInputFocus}
+            onSubmitEditing={handleSubmit}
             maxLength={1}
           />
         )}

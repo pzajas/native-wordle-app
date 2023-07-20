@@ -1,10 +1,9 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import { CONST } from '../src/utils/constants'
 
 import axios from 'axios'
-import UserInput from './UserInput'
 import UserInputs from './UserInputs'
 
 const App = () => {
@@ -14,7 +13,6 @@ const App = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          // 'https://polish-wordle-api.onrender.com/words/random_word'
           'https://random-word-api.vercel.app/api?words=1&length=5'
         )
         setRandomWord(response?.data)
@@ -27,7 +25,6 @@ const App = () => {
   }, [])
   return (
     <View style={styles.container}>
-      <UserInputs randomWord={randomWord} />
       <UserInputs randomWord={randomWord} />
     </View>
   )
