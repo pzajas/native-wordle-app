@@ -11,6 +11,7 @@ import UserInputs from './UserInputs'
 const App = () => {
   const [randomWord, setRandomWord] = useState('')
   const [counter, setCounter] = useState(1)
+  const [gameResult, setGameResult] = useState(false)
 
   const [fontLoaded] = useFonts({
     'custom-font': require('../assets/fonts/Poppins-Bold.ttf'),
@@ -54,6 +55,8 @@ const App = () => {
             counter={counter}
             randomWord={randomWord}
             setCounter={setCounter}
+            gameResult={gameResult}
+            setGameResult={setGameResult}
           />
         )}
       />

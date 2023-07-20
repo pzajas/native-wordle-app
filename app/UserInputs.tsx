@@ -7,6 +7,8 @@ const UserInputs = ({
   rowId,
   setCounter,
   counter,
+  gameResult,
+  setGameResult,
 }) => {
   const [guess, setGuess] = useState([])
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -30,6 +32,8 @@ const UserInputs = ({
         rowId={rowId}
         setCounter={setCounter}
         counter={counter}
+        gameResult={gameResult}
+        setGameResult={setGameResult}
       />
       <UserInput
         randomWord={randomWord}
@@ -41,6 +45,8 @@ const UserInputs = ({
         setIsSubmitted={setIsSubmitted}
         counter={counter}
         setCounter={setCounter}
+        gameResult={gameResult}
+        setGameResult={setGameResult}
       />
       <UserInput
         randomWord={randomWord}
@@ -52,6 +58,8 @@ const UserInputs = ({
         setIsSubmitted={setIsSubmitted}
         counter={counter}
         setCounter={setCounter}
+        gameResult={gameResult}
+        setGameResult={setGameResult}
       />
       <UserInput
         randomWord={randomWord}
@@ -63,6 +71,8 @@ const UserInputs = ({
         setIsSubmitted={setIsSubmitted}
         setCounter={setCounter}
         counter={counter}
+        gameResult={gameResult}
+        setGameResult={setGameResult}
       />
       <UserInput
         randomWord={randomWord}
@@ -74,6 +84,8 @@ const UserInputs = ({
         setIsSubmitted={setIsSubmitted}
         counter={counter}
         setCounter={setCounter}
+        gameResult={gameResult}
+        setGameResult={setGameResult}
       />
     </View>
   )
