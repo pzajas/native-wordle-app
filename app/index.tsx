@@ -10,12 +10,12 @@ import UserInputs from './UserInputs'
 const App = () => {
   const [randomWord, setRandomWord] = useState('')
 
-  const inputRef = useRef()
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          'https://polish-wordle-api.onrender.com/words/random_word'
+          // 'https://polish-wordle-api.onrender.com/words/random_word'
+          'https://random-word-api.vercel.app/api?words=1&length=5'
         )
         setRandomWord(response?.data)
       } catch (error) {
@@ -27,6 +27,7 @@ const App = () => {
   }, [])
   return (
     <View style={styles.container}>
+      <UserInputs randomWord={randomWord} />
       <UserInputs randomWord={randomWord} />
     </View>
   )
