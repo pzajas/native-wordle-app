@@ -1,8 +1,17 @@
 import { Controller, useForm } from 'react-hook-form'
-import { View, TextInput } from 'react-native'
+import {
+  Alert,
+  Modal,
+  Text,
+  Pressable,
+  View,
+  TextInput,
+  StyleSheet,
+} from 'react-native'
 import { useEffect, useState } from 'react'
 import { theme } from '../src/styles/theme'
 import axios from 'axios'
+import PrimaryModal from '../src/components/modals/PrimaryModal'
 
 type FormValues = {
   firstName: string
@@ -22,9 +31,13 @@ const UserInput = ({
   rowId,
   counter,
   setCounter,
+  gameResult,
+  setGameResult,
 }) => {
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
+
+  const [modalVisible, setModalVisible] = useState(false)
 
   const word = randomWord[0]
 
@@ -101,15 +114,27 @@ const UserInput = ({
       setIsSubmitted(true)
       setCounter((prevState) => prevState + 1)
     } else {
+      setCounter((prevState) => prevState + 1) //To remove later
       console.log('Word does not exist')
     }
+
+    if (word === guess.join('')) {
+      setModalVisible(true)
+      setGameResult(true)
+    }
+
+    if (counter === 6) {
+      setModalVisible(true)
+      setGameResult(false)
+    }
   }
+  console.log(counter)
 
   return (
     <View
       style={{
         flexDirection: 'row',
-        gap: 10,
+        gap: 1,
       }}
     >
       <Controller
@@ -160,6 +185,17 @@ const UserInput = ({
         )}
         rules={{ required: true }}
       />
+
+      <View>
+        {modalVisible ? (
+          <PrimaryModal
+            guess={guess}
+            resultText={gameResult ? 'You won' : 'You lost'}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+          />
+        ) : null}
+      </View>
     </View>
   )
 }
