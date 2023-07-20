@@ -4,10 +4,14 @@ export default function AppLayout() {
   return (
     <Tabs>
       <Tabs.Screen
-        name="App"
+        name="index"
         options={{
           title: 'Wordle',
           headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontSize: 30,
+            fontFamily: 'custom-font',
+          },
         }}
       />
 
@@ -22,6 +26,14 @@ export default function AppLayout() {
         name="UserInput"
         options={{
           title: 'UserInput',
+          href: null,
+        }}
+      />
+
+      <Tabs.Screen
+        name="UserInputs"
+        options={{
+          title: 'UserInputs',
           href: null,
         }}
       />
