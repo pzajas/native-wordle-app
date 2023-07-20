@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import UserInput from './UserInput'
 
@@ -16,9 +16,6 @@ const UserInputs = ({
   const thirdRef = useRef()
   const fourthRef = useRef()
   const fifthRef = useRef()
-
-  console.log(randomWord[0])
-  console.log(randomWord[0] === guess.join(''))
 
   return (
     <View style={styles.container}>
@@ -88,8 +85,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 3,
-    gap: 5,
+    gap: 1,
   },
 })
 

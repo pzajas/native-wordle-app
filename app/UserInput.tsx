@@ -1,6 +1,8 @@
 import { Controller, useForm } from 'react-hook-form'
 import { View, TextInput } from 'react-native'
 import { useEffect, useState } from 'react'
+import { theme } from '../src/styles/theme'
+import axios from 'axios'
 
 type FormValues = {
   firstName: string
@@ -43,16 +45,17 @@ const UserInput = ({
 
   const handleCheck = (text) => {
     if (text) {
-      const updatedGuess = [...guess, text]
+      const updatedGuess = [...guess, text.toUpperCase()]
       setGuess(updatedGuess)
 
       for (let i = 0; i < updatedGuess.length; i++) {
-        updatedGuess[i] && word[i] === updatedGuess[i]
+        updatedGuess[i].toUpperCase() &&
+        word[i] === updatedGuess[i].toUpperCase()
           ? setIsMatch(true)
           : setIsMatch(false)
       }
 
-      updatedGuess && word.includes(text)
+      updatedGuess && word.includes(text.toUpperCase())
         ? setIsPresent(true)
         : setIsPresent(false)
     }
@@ -78,10 +81,6 @@ const UserInput = ({
     ) {
       setIsSubmitted(true)
       setCounter((prevState) => prevState + 1)
-    }
-
-    if (counter === 6) {
-      console.log('end')
     }
   }
 
@@ -111,19 +110,26 @@ const UserInput = ({
                 ? fifthRef
                 : null
             }
+            // caretHidden
+            outlineWidth={0}
             style={{
-              width: 40,
-              height: 40,
+              width: 50,
+              height: 50,
               backgroundColor:
                 isMatch && isSubmitted
-                  ? 'green'
+                  ? theme.colors.green
                   : isPresent && isSubmitted
-                  ? 'yellow'
+                  ? theme.colors.yellow
                   : isPresent && isMatch && isSubmitted
-                  ? 'green'
-                  : 'grey',
-              borderRadius: 4,
+                  ? theme.colors.green
+                  : theme.colors.grey,
               textAlign: 'center',
+              // marginRight: 2,
+              // marginBottom: 2,
+              color: theme.colors.white,
+              outlineWidth: 0,
+              textTransform: 'uppercase',
+              fontFamily: 'custom-font',
             }}
             onChangeText={(text) => {
               handleCheck(text)
