@@ -18,8 +18,8 @@ const UserInputs = ({ randomWord }) => {
   const fourthRef = useRef()
   const fifthRef = useRef()
 
-  console.log(randomWord)
-  console.log(randomWord === guess.join(''))
+  console.log(randomWord[0])
+  console.log(randomWord[0] === guess.join(''))
 
   return (
     <View style={styles.container}>

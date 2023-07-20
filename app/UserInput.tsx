@@ -1,5 +1,5 @@
 import { Controller, useForm } from 'react-hook-form'
-import { View, StyleSheet, TextInput } from 'react-native'
+import { View, TextInput } from 'react-native'
 import { useEffect, useState } from 'react'
 
 type FormValues = {
@@ -19,12 +19,9 @@ const UserInput = ({
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
 
-  const { register, handleSubmit, setFocus, control } =
-    useForm<FormValues>()
+  const word = randomWord[0]
 
-  // useEffect(() => {
-  //   inputRef?.current.focus()
-  // }, [inputRef])
+  const { register, control } = useForm<FormValues>()
 
   useEffect(() => {
     if (guess.length === 0) {
@@ -41,19 +38,36 @@ const UserInput = ({
   }, [guess])
 
   const handleCheck = (text) => {
-    const updatedGuess = [...guess, text]
-    setGuess(updatedGuess)
+    if (text) {
+      const updatedGuess = [...guess, text]
+      setGuess(updatedGuess)
 
-    for (let i = 0; i < updatedGuess.length; i++) {
-      updatedGuess[i] && randomWord[i] === updatedGuess[i]
-        ? setIsMatch(true)
-        : setIsMatch(false)
+      for (let i = 0; i < updatedGuess.length; i++) {
+        updatedGuess[i] && word[i] === updatedGuess[i]
+          ? setIsMatch(true)
+          : setIsMatch(false)
+      }
+
+      updatedGuess && word.includes(text)
+        ? setIsPresent(true)
+        : setIsPresent(false)
     }
-
-    updatedGuess && randomWord.includes(text)
-      ? setIsPresent(true)
-      : setIsPresent(false)
   }
+
+  const handleKeyPress = (e) => {
+    if (e.nativeEvent.key === 'Backspace') {
+      setGuess((prevGuess) => prevGuess.slice(0, -1))
+      setIsPresent(false)
+      setIsMatch(false)
+    }
+  }
+
+  const handleInputFocus = () => {
+    setIsMatch(false)
+    setIsPresent(false)
+  }
+
+  console.log(guess)
 
   return (
     <View
@@ -96,6 +110,8 @@ const UserInput = ({
             onChangeText={(text) => {
               handleCheck(text)
             }}
+            onKeyPress={handleKeyPress}
+            onFocus={handleInputFocus}
             maxLength={1}
           />
         )}
