@@ -8,6 +8,7 @@ import UserInputs from './UserInputs'
 
 const App = () => {
   const [randomWord, setRandomWord] = useState('')
+  const [counter, setCounter] = useState(1)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +26,42 @@ const App = () => {
   }, [])
   return (
     <View style={styles.container}>
-      <UserInputs randomWord={randomWord} />
+      <UserInputs
+        randomWord={randomWord}
+        rowId={1}
+        setCounter={setCounter}
+        counter={counter}
+      />
+      <UserInputs
+        randomWord={randomWord}
+        rowId={2}
+        setCounter={setCounter}
+        counter={counter}
+      />
+      <UserInputs
+        randomWord={randomWord}
+        rowId={3}
+        setCounter={setCounter}
+        counter={counter}
+      />
+      <UserInputs
+        randomWord={randomWord}
+        rowId={4}
+        setCounter={setCounter}
+        counter={counter}
+      />
+      <UserInputs
+        randomWord={randomWord}
+        rowId={5}
+        setCounter={setCounter}
+        counter={counter}
+      />
+      <UserInputs
+        randomWord={randomWord}
+        rowId={6}
+        setCounter={setCounter}
+        counter={counter}
+      />
     </View>
   )
 }
@@ -35,6 +71,5 @@ export default App
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    gap: 10,
   },
 })

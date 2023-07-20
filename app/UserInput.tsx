@@ -17,16 +17,18 @@ const UserInput = ({
   fifthRef,
   isSubmitted,
   setIsSubmitted,
+  rowId,
+  counter,
+  setCounter,
 }) => {
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
-
   const word = randomWord[0]
 
   const { register, control } = useForm<FormValues>()
 
   useEffect(() => {
-    if (guess.length === 0) {
+    if (guess.length === 0 && rowId === counter) {
       inputRef?.current?.focus()
     } else if (guess.length === 1) {
       secondRef?.current?.focus()
@@ -37,7 +39,7 @@ const UserInput = ({
     } else if (guess.length === 4) {
       fifthRef?.current?.focus()
     }
-  }, [guess])
+  }, [guess, counter])
 
   const handleCheck = (text) => {
     if (text) {
@@ -75,10 +77,13 @@ const UserInput = ({
       guess.length === 5
     ) {
       setIsSubmitted(true)
+      setCounter((prevState) => prevState + 1)
+    }
+
+    if (counter === 6) {
+      console.log('end')
     }
   }
-
-  console.log(guess)
 
   return (
     <View
