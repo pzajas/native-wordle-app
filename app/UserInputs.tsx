@@ -2,7 +2,12 @@ import React, { useRef, useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import UserInput from './UserInput'
 
-const UserInputs = ({ randomWord }) => {
+const UserInputs = ({
+  randomWord,
+  rowId,
+  setCounter,
+  counter,
+}) => {
   const [guess, setGuess] = useState([])
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -25,6 +30,9 @@ const UserInputs = ({ randomWord }) => {
         setGuess={setGuess}
         isSubmitted={isSubmitted}
         setIsSubmitted={setIsSubmitted}
+        rowId={rowId}
+        setCounter={setCounter}
+        counter={counter}
       />
       <UserInput
         randomWord={randomWord}
@@ -34,6 +42,8 @@ const UserInputs = ({ randomWord }) => {
         setGuess={setGuess}
         isSubmitted={isSubmitted}
         setIsSubmitted={setIsSubmitted}
+        counter={counter}
+        setCounter={setCounter}
       />
       <UserInput
         randomWord={randomWord}
@@ -43,6 +53,8 @@ const UserInputs = ({ randomWord }) => {
         setGuess={setGuess}
         isSubmitted={isSubmitted}
         setIsSubmitted={setIsSubmitted}
+        counter={counter}
+        setCounter={setCounter}
       />
       <UserInput
         randomWord={randomWord}
@@ -52,6 +64,8 @@ const UserInputs = ({ randomWord }) => {
         setGuess={setGuess}
         isSubmitted={isSubmitted}
         setIsSubmitted={setIsSubmitted}
+        setCounter={setCounter}
+        counter={counter}
       />
       <UserInput
         randomWord={randomWord}
@@ -61,6 +75,8 @@ const UserInputs = ({ randomWord }) => {
         setGuess={setGuess}
         isSubmitted={isSubmitted}
         setIsSubmitted={setIsSubmitted}
+        counter={counter}
+        setCounter={setCounter}
       />
     </View>
   )
@@ -72,7 +88,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 5,
+    padding: 3,
     gap: 5,
   },
 })
