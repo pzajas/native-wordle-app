@@ -25,6 +25,7 @@ const UserInput = ({
 }) => {
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
+
   const word = randomWord[0]
 
   const { register, control } = useForm<FormValues>()
@@ -74,13 +75,33 @@ const UserInput = ({
     setIsPresent(false)
   }
 
-  const handleSubmit = (e) => {
+  const handleWordExist = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${guess.join(
+          ''
+        )}`
+      )
+      return response
+    } catch (error) {
+      console.log(error)
+      return null
+    }
+  }
+
+  const handleSubmit = async (e) => {
+    const response = await handleWordExist()
+
     if (
+      response &&
+      response.status === 200 &&
       e.nativeEvent.key === 'Enter' &&
       guess.length === 5
     ) {
       setIsSubmitted(true)
       setCounter((prevState) => prevState + 1)
+    } else {
+      console.log('Word does not exist')
     }
   }
 
@@ -94,7 +115,7 @@ const UserInput = ({
       <Controller
         name={name}
         control={control}
-        render={({ field: { onChange, onBlur } }) => (
+        render={() => (
           <TextInput
             {...register(name)}
             ref={
@@ -110,7 +131,6 @@ const UserInput = ({
                 ? fifthRef
                 : null
             }
-            // caretHidden
             outlineWidth={0}
             style={{
               width: 50,
@@ -124,8 +144,6 @@ const UserInput = ({
                   ? theme.colors.green
                   : theme.colors.grey,
               textAlign: 'center',
-              // marginRight: 2,
-              // marginBottom: 2,
               color: theme.colors.white,
               outlineWidth: 0,
               textTransform: 'uppercase',
