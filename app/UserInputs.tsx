@@ -1,16 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
+import React, { useRef, useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import UserInput from './UserInput'
 
-type FormValues = {
-  firstName: string
-}
-
 const UserInputs = ({ randomWord }) => {
   const [guess, setGuess] = useState([])
-  const { control, setFocus, register } =
-    useForm<FormValues>()
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   const inputRef = useRef()
   const secondRef = useRef()
@@ -29,6 +23,8 @@ const UserInputs = ({ randomWord }) => {
         name="firstName"
         guess={guess}
         setGuess={setGuess}
+        isSubmitted={isSubmitted}
+        setIsSubmitted={setIsSubmitted}
       />
       <UserInput
         randomWord={randomWord}
@@ -36,6 +32,8 @@ const UserInputs = ({ randomWord }) => {
         name="2"
         guess={guess}
         setGuess={setGuess}
+        isSubmitted={isSubmitted}
+        setIsSubmitted={setIsSubmitted}
       />
       <UserInput
         randomWord={randomWord}
@@ -43,6 +41,8 @@ const UserInputs = ({ randomWord }) => {
         name="3"
         guess={guess}
         setGuess={setGuess}
+        isSubmitted={isSubmitted}
+        setIsSubmitted={setIsSubmitted}
       />
       <UserInput
         randomWord={randomWord}
@@ -50,6 +50,8 @@ const UserInputs = ({ randomWord }) => {
         name="4"
         guess={guess}
         setGuess={setGuess}
+        isSubmitted={isSubmitted}
+        setIsSubmitted={setIsSubmitted}
       />
       <UserInput
         randomWord={randomWord}
@@ -57,6 +59,8 @@ const UserInputs = ({ randomWord }) => {
         name="5"
         guess={guess}
         setGuess={setGuess}
+        isSubmitted={isSubmitted}
+        setIsSubmitted={setIsSubmitted}
       />
     </View>
   )
