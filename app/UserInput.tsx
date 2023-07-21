@@ -1,25 +1,19 @@
 import { Controller, useForm } from 'react-hook-form'
-import {
-  Alert,
-  Modal,
-  Text,
-  Pressable,
-  View,
-  TextInput,
-  StyleSheet,
-} from 'react-native'
-import { useEffect, useState } from 'react'
+import { View, TextInput } from 'react-native'
+import { useState } from 'react'
 import { theme } from '../src/styles/theme'
+import { showMessage } from 'react-native-flash-message'
+
 import axios from 'axios'
 import PrimaryModal from '../src/components/modals/PrimaryModal'
-import { showMessage } from 'react-native-flash-message'
 
 type FormValues = {
   firstName: string
 }
 const UserInput = ({
+  rowId,
   randomWord,
-  inputRef,
+  firstRef,
   name,
   guess,
   setGuess,
@@ -29,40 +23,21 @@ const UserInput = ({
   fifthRef,
   isSubmitted,
   setIsSubmitted,
-  rowId,
   counter,
   setCounter,
   gameResult,
   handleGameReset,
   setGameResult,
-  setRandomWord,
 }) => {
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
-
   const [modalVisible, setModalVisible] = useState(false)
 
   const word = randomWord[0]
 
   const { register, control } = useForm<FormValues>()
 
-  useEffect(() => {
-    if (guess.length === 0 && rowId === counter) {
-      inputRef?.current?.focus()
-    } else if (guess.length === 1) {
-      secondRef?.current?.focus()
-    } else if (guess.length === 2) {
-      thirdRef?.current?.focus()
-    } else if (guess.length === 3) {
-      fourthRef?.current?.focus()
-    } else if (guess.length === 4) {
-      fifthRef?.current?.focus()
-    }
-
-    console.log(word, rowId, counter)
-  }, [guess, counter])
-
-  const handleCheck = (text) => {
+  const handleCheck = (text: string) => {
     if (text) {
       const updatedGuess = [...guess, text.toUpperCase()]
       setGuess(updatedGuess)
@@ -111,9 +86,9 @@ const UserInput = ({
   const handleWordExist = async () => {
     try {
       const response = await axios.get(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${guess.join(
-          ''
-        )}`
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${(
+          guess as string[]
+        ).join('')}`
       )
       return response
     } catch (error) {
@@ -124,50 +99,49 @@ const UserInput = ({
 
   const handleSubmit = async (e) => {
     const response = await handleWordExist()
-    const isWordExists =
+    const userWord = guess.join('')
+
+    const isProperWord =
       response &&
       response.status === 200 &&
       guess.length === 5
 
-    if (e.nativeEvent.key === 'Enter' && isWordExists) {
+    if (e.nativeEvent.key === 'Enter' && isProperWord) {
       setIsSubmitted(true)
       setCounter((prevState) => prevState + 1)
     } else {
       e.preventDefault()
-      createToast()
       if (e.nativeEvent.key === 'Enter') {
-        if (name === 'firstName') {
-          inputRef?.current?.focus()
-        } else if (name === '2') {
+        if (name) {
+          firstRef?.current?.focus()
+        } else if (name) {
           secondRef?.current?.focus()
-        } else if (name === '3') {
+        } else if (name) {
           thirdRef?.current?.focus()
-        } else if (name === '4') {
+        } else if (name) {
           fourthRef?.current?.focus()
-        } else if (name === '5') {
+        } else if (names) {
           fifthRef?.current?.focus()
         }
       }
+      createToast()
     }
 
-    if (word === guess.join('')) {
-      setModalVisible(true)
-      setGameResult(true)
-    }
-
-    if (counter === 6 && word !== guess.join('')) {
+    if (counter === 6 && word !== userWord) {
       setModalVisible(true)
       setGameResult(false)
     }
 
-    console.log(word, rowId, counter)
-  }
+    if (rowId === 6 && response?.status !== 200) {
+      setModalVisible(false)
+      setGameResult(false)
+    }
 
-  // console.log({
-  //   word: word,
-  //   guess: guess.join(''),
-  //   game: gameResult,
-  // })
+    if (word === userWord) {
+      setModalVisible(true)
+      setGameResult(true)
+    }
+  }
 
   return (
     <View
@@ -182,19 +156,7 @@ const UserInput = ({
         render={({ field: { onBlur } }) => (
           <TextInput
             {...register(name)}
-            ref={
-              name === 'firstName'
-                ? inputRef
-                : name === '2'
-                ? secondRef
-                : name === '3'
-                ? thirdRef
-                : name === '4'
-                ? fourthRef
-                : name === '5'
-                ? fifthRef
-                : null
-            }
+            ref={firstRef}
             outlineWidth={0}
             onBlur={onBlur}
             style={{
@@ -220,8 +182,8 @@ const UserInput = ({
             onKeyPress={handleKeyPress}
             onFocus={handleInputFocus}
             onSubmitEditing={handleSubmit}
-            maxLength={1}
             editable={!isSubmitted}
+            maxLength={1}
           />
         )}
         rules={{ required: true }}
@@ -230,13 +192,11 @@ const UserInput = ({
       <View>
         {modalVisible ? (
           <PrimaryModal
-            guess={guess}
             resultText={gameResult ? 'You won' : 'You lost'}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
             handleGameReset={handleGameReset}
             setGameResult={setGameResult}
-            setRandomWord={setRandomWord}
           />
         ) : null}
       </View>

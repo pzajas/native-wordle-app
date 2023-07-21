@@ -1,19 +1,11 @@
 import { useEffect, useState } from 'react'
-import {
-  FlatList,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  View,
-} from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { useFonts } from 'expo-font'
-import FlashMessage from 'react-native-flash-message'
-
-import { CONST } from '../src/utils/constants'
-
-import axios from 'axios'
-import UserInputs from './UserInputs'
 import { theme } from '../src/styles/theme'
+import { fetchData } from '../funcs/fetchData'
+
+import UserInputs from './UserInputs'
+import FlashMessage from 'react-native-flash-message'
 
 const App = () => {
   const [randomWord, setRandomWord] = useState('')
@@ -21,36 +13,25 @@ const App = () => {
   const [resetKey, setResetKey] = useState(0)
   const [gameResult, setGameResult] = useState(false)
 
+  const rowIds = [1, 2, 3, 4, 5, 6]
+
   const [fontLoaded] = useFonts({
     'custom-font': require('../assets/fonts/Poppins-Bold.ttf'),
   })
-  const rowIds = [1, 2, 3, 4, 5, 6]
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        // 'https://polish-wordle-api.onrender.com/words/random_word'
-        'https://random-word-api.vercel.app/api?words=1&length=5&type=uppercase'
-      )
-      setRandomWord(response?.data)
-    } catch (error) {
-      console.error(CONST.API_ERROR, error)
-    }
-  }
 
   useEffect(() => {
-    void fetchData()
+    void fetchData(setRandomWord)
   }, [])
-
-  if (!fontLoaded) {
-    return null
-  }
 
   const handleGameReset = () => {
     setResetKey((prevKey) => prevKey + 1)
     setCounter(0)
 
-    void fetchData()
+    void fetchData(setRandomWord)
+  }
+
+  if (!fontLoaded) {
+    return null
   }
 
   console.log(randomWord)
