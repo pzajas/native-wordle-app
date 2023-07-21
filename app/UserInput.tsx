@@ -33,7 +33,9 @@ const UserInput = ({
   counter,
   setCounter,
   gameResult,
+  handleGameReset,
   setGameResult,
+  setRandomWord,
 }) => {
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
@@ -56,6 +58,8 @@ const UserInput = ({
     } else if (guess.length === 4) {
       fifthRef?.current?.focus()
     }
+
+    console.log(word, rowId, counter)
   }, [guess, counter])
 
   const handleCheck = (text) => {
@@ -120,17 +124,30 @@ const UserInput = ({
 
   const handleSubmit = async (e) => {
     const response = await handleWordExist()
-
-    if (
+    const isWordExists =
       response &&
       response.status === 200 &&
-      e.nativeEvent.key === 'Enter' &&
       guess.length === 5
-    ) {
+
+    if (e.nativeEvent.key === 'Enter' && isWordExists) {
       setIsSubmitted(true)
       setCounter((prevState) => prevState + 1)
     } else {
+      e.preventDefault()
       createToast()
+      if (e.nativeEvent.key === 'Enter') {
+        if (name === 'firstName') {
+          inputRef?.current?.focus()
+        } else if (name === '2') {
+          secondRef?.current?.focus()
+        } else if (name === '3') {
+          thirdRef?.current?.focus()
+        } else if (name === '4') {
+          fourthRef?.current?.focus()
+        } else if (name === '5') {
+          fifthRef?.current?.focus()
+        }
+      }
     }
 
     if (word === guess.join('')) {
@@ -138,12 +155,19 @@ const UserInput = ({
       setGameResult(true)
     }
 
-    if (counter === 6) {
+    if (counter === 6 && word !== guess.join('')) {
       setModalVisible(true)
       setGameResult(false)
     }
+
+    console.log(word, rowId, counter)
   }
-  console.log(counter, guess.length)
+
+  // console.log({
+  //   word: word,
+  //   guess: guess.join(''),
+  //   game: gameResult,
+  // })
 
   return (
     <View
@@ -155,7 +179,7 @@ const UserInput = ({
       <Controller
         name={name}
         control={control}
-        render={() => (
+        render={({ field: { onBlur } }) => (
           <TextInput
             {...register(name)}
             ref={
@@ -172,6 +196,7 @@ const UserInput = ({
                 : null
             }
             outlineWidth={0}
+            onBlur={onBlur}
             style={{
               width: 50,
               height: 50,
@@ -196,6 +221,7 @@ const UserInput = ({
             onFocus={handleInputFocus}
             onSubmitEditing={handleSubmit}
             maxLength={1}
+            editable={!isSubmitted}
           />
         )}
         rules={{ required: true }}
@@ -208,6 +234,9 @@ const UserInput = ({
             resultText={gameResult ? 'You won' : 'You lost'}
             modalVisible={modalVisible}
             setModalVisible={setModalVisible}
+            handleGameReset={handleGameReset}
+            setGameResult={setGameResult}
+            setRandomWord={setRandomWord}
           />
         ) : null}
       </View>
