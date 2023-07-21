@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { theme } from '../src/styles/theme'
 import axios from 'axios'
 import PrimaryModal from '../src/components/modals/PrimaryModal'
+import { showMessage } from 'react-native-flash-message'
 
 type FormValues = {
   firstName: string
@@ -88,6 +89,21 @@ const UserInput = ({
     setIsPresent(false)
   }
 
+  const createToast = () => {
+    showMessage({
+      message:
+        guess.length < 5
+          ? 'The word is too short'
+          : 'There is no such word!',
+      type: 'danger',
+      animated: true,
+      position: 'bottom',
+      style: {
+        alignItems: 'center',
+      },
+    })
+  }
+
   const handleWordExist = async () => {
     try {
       const response = await axios.get(
@@ -97,7 +113,7 @@ const UserInput = ({
       )
       return response
     } catch (error) {
-      console.log(error)
+      createToast()
       return null
     }
   }
@@ -114,8 +130,7 @@ const UserInput = ({
       setIsSubmitted(true)
       setCounter((prevState) => prevState + 1)
     } else {
-      setCounter((prevState) => prevState + 1) //To remove later
-      console.log('Word does not exist')
+      createToast()
     }
 
     if (word === guess.join('')) {
@@ -128,7 +143,7 @@ const UserInput = ({
       setGameResult(false)
     }
   }
-  console.log(counter)
+  console.log(counter, guess.length)
 
   return (
     <View
