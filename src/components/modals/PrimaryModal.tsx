@@ -12,6 +12,8 @@ const PrimaryModal = ({
   modalVisible,
   setModalVisible,
   resultText,
+  handleGameReset,
+  setGameResult,
 }) => {
   return (
     <View style={styles.centeredView}>
@@ -31,7 +33,11 @@ const PrimaryModal = ({
             </Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {
+                setModalVisible(!modalVisible)
+                setGameResult(false)
+                handleGameReset()
+              }}
             >
               <Text style={styles.textStyle}>
                 Hide Modal

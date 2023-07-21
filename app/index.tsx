@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import {
+  FlatList,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  View,
+} from 'react-native'
 import { useFonts } from 'expo-font'
-import { FlatList } from 'react-native-gesture-handler'
 import FlashMessage from 'react-native-flash-message'
 
 import { CONST } from '../src/utils/constants'
@@ -13,6 +18,7 @@ import { theme } from '../src/styles/theme'
 const App = () => {
   const [randomWord, setRandomWord] = useState('')
   const [counter, setCounter] = useState(1)
+  const [resetKey, setResetKey] = useState(0)
   const [gameResult, setGameResult] = useState(false)
 
   const [fontLoaded] = useFonts({
@@ -20,19 +26,19 @@ const App = () => {
   })
   const rowIds = [1, 2, 3, 4, 5, 6]
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          // 'https://polish-wordle-api.onrender.com/words/random_word'
-          'https://random-word-api.vercel.app/api?words=1&length=5&type=uppercase'
-        )
-        setRandomWord(response?.data)
-      } catch (error) {
-        console.error(CONST.API_ERROR, error)
-      }
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        // 'https://polish-wordle-api.onrender.com/words/random_word'
+        'https://random-word-api.vercel.app/api?words=1&length=5&type=uppercase'
+      )
+      setRandomWord(response?.data)
+    } catch (error) {
+      console.error(CONST.API_ERROR, error)
     }
+  }
 
+  useEffect(() => {
     void fetchData()
   }, [])
 
@@ -40,11 +46,19 @@ const App = () => {
     return null
   }
 
+  const handleGameReset = () => {
+    setResetKey((prevKey) => prevKey + 1)
+    setCounter(0)
+
+    void fetchData()
+  }
+
   console.log(randomWord)
 
   return (
     <View style={styles.container}>
       <FlatList
+        key={resetKey}
         contentContainerStyle={{
           justifyContent: 'center',
           height: '100%',
@@ -57,9 +71,11 @@ const App = () => {
             rowId={item}
             counter={counter}
             randomWord={randomWord}
+            setRandomWord={setRandomWord}
             setCounter={setCounter}
             gameResult={gameResult}
             setGameResult={setGameResult}
+            handleGameReset={handleGameReset}
           />
         )}
       />
