@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 35,
     alignItems: 'center',
+    shadowColor: theme.colors.green,
     shadowOffset: {
       width: 0,
       height: 2,

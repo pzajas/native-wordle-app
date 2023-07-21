@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useFonts } from 'expo-font'
 import { FlatList } from 'react-native-gesture-handler'
+import FlashMessage from 'react-native-flash-message'
 
 import { CONST } from '../src/utils/constants'
 
 import axios from 'axios'
 import UserInputs from './UserInputs'
+import { theme } from '../src/styles/theme'
 
 const App = () => {
   const [randomWord, setRandomWord] = useState('')
@@ -22,6 +24,7 @@ const App = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
+          // 'https://polish-wordle-api.onrender.com/words/random_word'
           'https://random-word-api.vercel.app/api?words=1&length=5&type=uppercase'
         )
         setRandomWord(response?.data)
@@ -60,6 +63,7 @@ const App = () => {
           />
         )}
       />
+      <FlashMessage position="top" />
     </View>
   )
 }
@@ -70,7 +74,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     height: '100%',
-    backgroundColor: '#181818',
+    backgroundColor: theme.colors.black,
     fontWeight: 600,
     fontFamily: 'custom-font',
   },
