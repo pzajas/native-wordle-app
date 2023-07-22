@@ -1,104 +1,81 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 import UserInput from './UserInput'
+import {
+  TextInputRef,
+  UserInputsProps,
+} from '../src/typescript/types'
 
 const UserInputs = ({
   randomWord,
   rowId,
-  setCounter,
-  counter,
+  setChanceCounter,
+  chanceCounter,
   gameResult,
   setGameResult,
   handleGameReset,
   setRandomWord,
-}) => {
-  const [guess, setGuess] = useState([])
+}: UserInputsProps) => {
+  const [guess, setGuess] = useState<string[]>([])
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const inputRef = useRef()
-  const secondRef = useRef()
-  const thirdRef = useRef()
-  const fourthRef = useRef()
-  const fifthRef = useRef()
+  const firstRef: TextInputRef = useRef(null)
+  const secondRef: TextInputRef = useRef(null)
+  const thirdRef: TextInputRef = useRef(null)
+  const fourthRef: TextInputRef = useRef(null)
+  const fifthRef: TextInputRef = useRef(null)
+
+  const inputRefs = useRef([
+    firstRef,
+    secondRef,
+    thirdRef,
+    fourthRef,
+    fifthRef,
+  ])
+
+  useEffect(() => {
+    if (guess.length === 0 && rowId === chanceCounter) {
+      firstRef?.current?.focus()
+    } else if (guess.length === 1) {
+      secondRef?.current?.focus()
+    } else if (guess.length === 2) {
+      thirdRef?.current?.focus()
+    } else if (guess.length === 3) {
+      fourthRef?.current?.focus()
+    } else if (guess.length === 4) {
+      fifthRef?.current?.focus()
+    }
+  }, [guess.length, chanceCounter, rowId])
+
+  const userInputProps = {
+    rowId: rowId,
+    guess: guess,
+    setGuess: setGuess,
+    isSubmitted: isSubmitted,
+    setIsSubmitted: setIsSubmitted,
+    chanceCounter: chanceCounter,
+    setChanceCounter: setChanceCounter,
+    gameResult: gameResult,
+    handleGameReset: handleGameReset,
+    setRandomWord: setRandomWord,
+    setGameResult: setGameResult,
+    randomWord: randomWord,
+    secondRef: secondRef,
+    thirdRef: thirdRef,
+    fourthRef: fourthRef,
+    fifthRef: fifthRef,
+  }
 
   return (
     <View style={styles.container}>
-      <UserInput
-        randomWord={randomWord}
-        inputRef={inputRef}
-        name="firstName"
-        guess={guess}
-        setGuess={setGuess}
-        isSubmitted={isSubmitted}
-        setIsSubmitted={setIsSubmitted}
-        rowId={rowId}
-        setCounter={setCounter}
-        counter={counter}
-        gameResult={gameResult}
-        setGameResult={setGameResult}
-        handleGameReset={handleGameReset}
-        setRandomWord={setRandomWord}
-      />
-      <UserInput
-        randomWord={randomWord}
-        secondRef={secondRef}
-        name="2"
-        guess={guess}
-        setGuess={setGuess}
-        isSubmitted={isSubmitted}
-        setIsSubmitted={setIsSubmitted}
-        counter={counter}
-        setCounter={setCounter}
-        gameResult={gameResult}
-        handleGameReset={handleGameReset}
-        setRandomWord={setRandomWord}
-        setGameResult={setGameResult}
-      />
-      <UserInput
-        randomWord={randomWord}
-        thirdRef={thirdRef}
-        name="3"
-        guess={guess}
-        setGuess={setGuess}
-        isSubmitted={isSubmitted}
-        setIsSubmitted={setIsSubmitted}
-        counter={counter}
-        setCounter={setCounter}
-        gameResult={gameResult}
-        handleGameReset={handleGameReset}
-        setRandomWord={setRandomWord}
-        setGameResult={setGameResult}
-      />
-      <UserInput
-        randomWord={randomWord}
-        fourthRef={fourthRef}
-        name="4"
-        guess={guess}
-        setGuess={setGuess}
-        isSubmitted={isSubmitted}
-        setIsSubmitted={setIsSubmitted}
-        setCounter={setCounter}
-        counter={counter}
-        gameResult={gameResult}
-        handleGameReset={handleGameReset}
-        setRandomWord={setRandomWord}
-        setGameResult={setGameResult}
-      />
-      <UserInput
-        randomWord={randomWord}
-        fifthRef={fifthRef}
-        name="5"
-        guess={guess}
-        setGuess={setGuess}
-        isSubmitted={isSubmitted}
-        setIsSubmitted={setIsSubmitted}
-        counter={counter}
-        setCounter={setCounter}
-        gameResult={gameResult}
-        handleGameReset={handleGameReset}
-        setRandomWord={setRandomWord}
-        setGameResult={setGameResult}
-      />
+      {inputRefs.current.map((ref, index) => (
+        <UserInput
+          key={index}
+          firstRef={ref}
+          name={String(index + 1)}
+          {...userInputProps}
+        />
+      ))}
     </View>
   )
 }

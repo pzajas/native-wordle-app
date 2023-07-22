@@ -56,11 +56,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
-    fontFamily: 'custom-font',
   },
   modalView: {
     margin: 20,
-    fontFamily: 'custom-font',
     backgroundColor: theme.colors.grey,
     borderColor: theme.colors.white,
     borderWidth: 1,
@@ -88,12 +86,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontFamily: 'custom-font',
   },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
-    fontFamily: 'custom-font',
     color: theme.colors.white,
   },
 })
