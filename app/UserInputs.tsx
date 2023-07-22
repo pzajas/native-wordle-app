@@ -1,27 +1,32 @@
 import { useRef, useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 import UserInput from './UserInput'
+import {
+  TextInputRef,
+  UserInputsProps,
+} from '../src/typescript/types'
+import { log } from 'react-native-reanimated'
 
 const UserInputs = ({
   randomWord,
   rowId,
-  setCounter,
-  counter,
+  setChanceCounter,
+  chanceCounter,
   gameResult,
   setGameResult,
   handleGameReset,
   setRandomWord,
-}) => {
+}: UserInputsProps) => {
   const [guess, setGuess] = useState<string[]>([])
   const [isSubmitted, setIsSubmitted] = useState(false)
 
   const word = randomWord[0]
 
-  const firstRef = useRef()
-  const secondRef = useRef()
-  const thirdRef = useRef()
-  const fourthRef = useRef()
-  const fifthRef = useRef()
+  const firstRef: TextInputRef = useRef(null)
+  const secondRef: TextInputRef = useRef(null)
+  const thirdRef: TextInputRef = useRef(null)
+  const fourthRef: TextInputRef = useRef(null)
+  const fifthRef: TextInputRef = useRef(null)
 
   const inputRefs = useRef([
     firstRef,
@@ -31,23 +36,8 @@ const UserInputs = ({
     fifthRef,
   ])
 
-  const userInputProps = {
-    rowId: rowId,
-    guess: guess,
-    setGuess: setGuess,
-    isSubmitted: isSubmitted,
-    setIsSubmitted: setIsSubmitted,
-    counter: counter,
-    setCounter: setCounter,
-    gameResult: gameResult,
-    handleGameReset: handleGameReset,
-    setRandomWord: setRandomWord,
-    setGameResult: setGameResult,
-    randomWord: randomWord,
-  }
-
   useEffect(() => {
-    if (guess.length === 0 && rowId === counter) {
+    if (guess.length === 0 && rowId === chanceCounter) {
       firstRef?.current?.focus()
     } else if (guess.length === 1) {
       secondRef?.current?.focus()
@@ -58,7 +48,26 @@ const UserInputs = ({
     } else if (guess.length === 4) {
       fifthRef?.current?.focus()
     }
-  }, [guess.length, counter, rowId, word])
+  }, [guess.length, chanceCounter, rowId, word])
+
+  const userInputProps = {
+    rowId: rowId,
+    guess: guess,
+    setGuess: setGuess,
+    isSubmitted: isSubmitted,
+    setIsSubmitted: setIsSubmitted,
+    chanceCounter: chanceCounter,
+    setChanceCounter: setChanceCounter,
+    gameResult: gameResult,
+    handleGameReset: handleGameReset,
+    setRandomWord: setRandomWord,
+    setGameResult: setGameResult,
+    randomWord: randomWord,
+    secondRef: secondRef,
+    thirdRef: thirdRef,
+    fourthRef: fourthRef,
+    fifthRef: fifthRef,
+  }
 
   return (
     <View style={styles.container}>

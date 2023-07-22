@@ -10,14 +10,7 @@ export default function AppLayout() {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontSize: 30,
-            fontFamily: 'custom-font',
           },
-        }}
-      />
-
-      <Tabs.Screen
-        name="Game"
-        options={{
           href: null,
         }}
       />

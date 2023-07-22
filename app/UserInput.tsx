@@ -1,15 +1,26 @@
+/* eslint-disable indent */
 import { Controller, useForm } from 'react-hook-form'
-import { View, TextInput } from 'react-native'
 import { useState } from 'react'
 import { theme } from '../src/styles/theme'
-import { showMessage } from 'react-native-flash-message'
+import {
+  View,
+  TextInput,
+  NativeSyntheticEvent,
+  TextInputKeyPressEventData,
+  TextInputSubmitEditingEventData,
+  StyleSheet,
+} from 'react-native'
+import {
+  createToast,
+  handleWordExist,
+} from '../funcs/helpers'
+import {
+  FormValues,
+  UserInputProps,
+} from '../src/typescript/types'
 
-import axios from 'axios'
 import PrimaryModal from '../src/components/modals/PrimaryModal'
 
-type FormValues = {
-  firstName: string
-}
 const UserInput = ({
   rowId,
   randomWord,
@@ -23,17 +34,17 @@ const UserInput = ({
   fifthRef,
   isSubmitted,
   setIsSubmitted,
-  counter,
-  setCounter,
+  chanceCounter,
+  setChanceCounter,
   gameResult,
   handleGameReset,
   setGameResult,
-}) => {
+}: UserInputProps) => {
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
 
-  const word = randomWord[0]
+  const word: string = randomWord[0]
 
   const { register, control } = useForm<FormValues>()
 
@@ -43,7 +54,7 @@ const UserInput = ({
       setGuess(updatedGuess)
 
       for (let i = 0; i < updatedGuess.length; i++) {
-        updatedGuess[i].toUpperCase() &&
+        updatedGuess[i]?.toUpperCase() &&
         word[i] === updatedGuess[i].toUpperCase()
           ? setIsMatch(true)
           : setIsMatch(false)
@@ -55,9 +66,13 @@ const UserInput = ({
     }
   }
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (
+    e: NativeSyntheticEvent<TextInputKeyPressEventData>
+  ) => {
     if (e.nativeEvent.key === 'Backspace') {
-      setGuess((prevGuess) => prevGuess.slice(0, -1))
+      setGuess((prevGuess: string[]) =>
+        prevGuess.slice(0, -1)
+      )
       setIsPresent(false)
       setIsMatch(false)
     }
@@ -68,80 +83,61 @@ const UserInput = ({
     setIsPresent(false)
   }
 
-  const createToast = () => {
-    showMessage({
-      message:
-        guess.length < 5
-          ? 'The word is too short'
-          : 'There is no such word!',
-      type: 'danger',
-      animated: true,
-      position: 'bottom',
-      style: {
-        alignItems: 'center',
-      },
-    })
-  }
+  const handleSubmit = async (e: any) => {
+    e.persist()
 
-  const handleWordExist = async () => {
     try {
-      const response = await axios.get(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${(
-          guess as string[]
-        ).join('')}`
-      )
-      return response
-    } catch (error) {
-      createToast()
-      return null
-    }
-  }
+      const response = await handleWordExist(guess)
+      const userWord = guess.join('')
 
-  const handleSubmit = async (e) => {
-    const response = await handleWordExist()
-    const userWord = guess.join('')
+      const isProperWord =
+        response &&
+        response.status === 200 &&
+        guess.length === 5
 
-    const isProperWord =
-      response &&
-      response.status === 200 &&
-      guess.length === 5
-
-    if (e.nativeEvent.key === 'Enter' && isProperWord) {
-      setIsSubmitted(true)
-      setCounter((prevState) => prevState + 1)
-    } else {
-      e.preventDefault()
-      if (e.nativeEvent.key === 'Enter') {
-        if (name) {
-          firstRef?.current?.focus()
-        } else if (name) {
-          secondRef?.current?.focus()
-        } else if (name) {
-          thirdRef?.current?.focus()
-        } else if (name) {
-          fourthRef?.current?.focus()
-        } else if (names) {
-          fifthRef?.current?.focus()
-        }
+      if (guess.length === 5 && isProperWord) {
+        setIsSubmitted(true)
+        setChanceCounter(
+          (prevState: number) => prevState + 1
+        )
       }
-      createToast()
-    }
 
-    if (counter === 6 && word !== userWord) {
-      setModalVisible(true)
-      setGameResult(false)
-    }
+      if (
+        e?.nativeEvent?.key === 'Enter' &&
+        !isProperWord
+      ) {
+        firstRef?.current?.focus()
+        secondRef?.current?.focus()
+        thirdRef?.current?.focus()
+        fourthRef?.current?.focus()
+        fifthRef?.current?.focus()
 
-    if (rowId === 6 && response?.status !== 200) {
-      setModalVisible(false)
-      setGameResult(false)
-    }
+        createToast(guess)
+      }
 
-    if (word === userWord) {
-      setModalVisible(true)
-      setGameResult(true)
+      if (chanceCounter === 6 && word !== userWord) {
+        setModalVisible(true)
+        setGameResult(false)
+      }
+
+      if (rowId === 6 && response?.status !== 200) {
+        setModalVisible(false)
+        setGameResult(false)
+      }
+
+      if (word === userWord) {
+        setModalVisible(true)
+        setGameResult(true)
+      }
+    } catch (error) {
+      console.error(
+        'Error occurred during API call:',
+        error
+      )
     }
   }
+
+  console.log(guess)
 
   return (
     <View
@@ -153,11 +149,12 @@ const UserInput = ({
       <Controller
         name={name}
         control={control}
-        render={({ field: { onBlur } }) => (
+        render={({ field: { onBlur, value } }) => (
           <TextInput
+            value={value}
             {...register(name)}
             ref={firstRef}
-            outlineWidth={0}
+            caretHidden
             onBlur={onBlur}
             style={{
               width: 50,
@@ -171,10 +168,12 @@ const UserInput = ({
                   ? theme.colors.green
                   : theme.colors.grey,
               textAlign: 'center',
+              outline: 'none',
               color: theme.colors.white,
-              outlineWidth: 0,
+              borderColor: 'transparent',
               textTransform: 'uppercase',
-              fontFamily: 'custom-font',
+              fontWeight: '800',
+              fontSize: '20',
             }}
             onChangeText={(text) => {
               handleCheck(text)
@@ -184,9 +183,12 @@ const UserInput = ({
             onSubmitEditing={handleSubmit}
             editable={!isSubmitted}
             maxLength={1}
+            returnKeyType="default"
           />
         )}
-        rules={{ required: true }}
+        rules={{
+          required: true,
+        }}
       />
 
       <View>
