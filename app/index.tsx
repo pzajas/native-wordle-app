@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: theme.colors.black,
     fontWeight: 600,
-    // fontFamily: 'custom-font',
   },
   customText: {
     fontSize: 40,

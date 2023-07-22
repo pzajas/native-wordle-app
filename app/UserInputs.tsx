@@ -5,7 +5,6 @@ import {
   TextInputRef,
   UserInputsProps,
 } from '../src/typescript/types'
-import { log } from 'react-native-reanimated'
 
 const UserInputs = ({
   randomWord,
@@ -19,8 +18,6 @@ const UserInputs = ({
 }: UserInputsProps) => {
   const [guess, setGuess] = useState<string[]>([])
   const [isSubmitted, setIsSubmitted] = useState(false)
-
-  const word = randomWord[0]
 
   const firstRef: TextInputRef = useRef(null)
   const secondRef: TextInputRef = useRef(null)
@@ -48,7 +45,7 @@ const UserInputs = ({
     } else if (guess.length === 4) {
       fifthRef?.current?.focus()
     }
-  }, [guess.length, chanceCounter, rowId, word])
+  }, [guess.length, chanceCounter, rowId])
 
   const userInputProps = {
     rowId: rowId,

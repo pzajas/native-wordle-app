@@ -1,14 +1,12 @@
 /* eslint-disable indent */
 import { Controller, useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { theme } from '../src/styles/theme'
 import {
   View,
   TextInput,
   NativeSyntheticEvent,
   TextInputKeyPressEventData,
-  TextInputSubmitEditingEventData,
-  StyleSheet,
 } from 'react-native'
 import {
   createToast,
@@ -137,8 +135,6 @@ const UserInput = ({
     }
   }
 
-  console.log(guess)
-
   return (
     <View
       style={{
@@ -149,9 +145,8 @@ const UserInput = ({
       <Controller
         name={name}
         control={control}
-        render={({ field: { onBlur, value } }) => (
+        render={({ field: { onBlur } }) => (
           <TextInput
-            value={value}
             {...register(name)}
             ref={firstRef}
             caretHidden
