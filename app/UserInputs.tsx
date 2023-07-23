@@ -15,6 +15,7 @@ const UserInputs = ({
   setGameResult,
   handleGameReset,
   setRandomWord,
+  setIsSubmitting,
 }: UserInputsProps) => {
   const [guess, setGuess] = useState<string[]>([])
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -64,6 +65,7 @@ const UserInputs = ({
     thirdRef: thirdRef,
     fourthRef: fourthRef,
     fifthRef: fifthRef,
+    setIsSubmitting: setIsSubmitting,
   }
 
   return (
