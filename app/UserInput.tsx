@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { Controller, useForm } from 'react-hook-form'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { theme } from '../src/styles/theme'
 import {
   View,
@@ -41,6 +41,7 @@ const UserInput = ({
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
+  const [isFocused, setIsFocused] = useState(false)
 
   const word: string = randomWord[0]
 
@@ -50,7 +51,6 @@ const UserInput = ({
     if (text) {
       const updatedGuess = [...guess, text.toUpperCase()]
       setGuess(updatedGuess)
-
       for (let i = 0; i < updatedGuess.length; i++) {
         updatedGuess[i]?.toUpperCase() &&
         word[i] === updatedGuess[i].toUpperCase()
@@ -79,8 +79,12 @@ const UserInput = ({
   const handleInputFocus = () => {
     setIsMatch(false)
     setIsPresent(false)
+    setIsFocused(true)
   }
 
+  const handleInputBlur = () => {
+    setIsFocused(false)
+  }
   const handleSubmit = async (e: any) => {
     e.persist()
 
@@ -145,23 +149,24 @@ const UserInput = ({
       <Controller
         name={name}
         control={control}
-        render={({ field: { onBlur } }) => (
+        render={() => (
           <TextInput
             {...register(name)}
             ref={firstRef}
             caretHidden
-            onBlur={onBlur}
+            onBlur={handleInputBlur}
             style={{
               width: 50,
               height: 50,
-              backgroundColor:
-                isMatch && isSubmitted
+              backgroundColor: isFocused
+                ? theme.colors.grey.light
+                : isSubmitted
+                ? isMatch
                   ? theme.colors.green
-                  : isPresent && isSubmitted
+                  : isPresent
                   ? theme.colors.yellow
-                  : isPresent && isMatch && isSubmitted
-                  ? theme.colors.green
-                  : theme.colors.grey,
+                  : theme.colors.grey.dark
+                : theme.colors.grey.dark,
               textAlign: 'center',
               outline: 'none',
               color: theme.colors.white,
