@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+} from 'react-native'
 import { useFonts } from 'expo-font'
 import { theme } from '../src/styles/theme'
 import { fetchData } from '../funcs/helpers'
@@ -12,6 +17,7 @@ const App = () => {
   const [chanceCounter, setChanceCounter] = useState(1)
   const [resetKey, setResetKey] = useState(0)
   const [gameResult, setGameResult] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleGameReset = () => {
     setResetKey((prevKey) => prevKey + 1)
@@ -54,10 +60,31 @@ const App = () => {
             gameResult={gameResult}
             setGameResult={setGameResult}
             handleGameReset={handleGameReset}
+            setIsSubmitting={setIsSubmitting}
           />
         )}
       />
       <FlashMessage position="top" />
+
+      {isSubmitting && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          }}
+        >
+          <ActivityIndicator
+            size="large"
+            color={theme.colors.white}
+          />
+        </View>
+      )}
     </View>
   )
 }

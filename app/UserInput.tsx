@@ -26,10 +26,6 @@ const UserInput = ({
   name,
   guess,
   setGuess,
-  secondRef,
-  thirdRef,
-  fourthRef,
-  fifthRef,
   isSubmitted,
   setIsSubmitted,
   chanceCounter,
@@ -37,6 +33,7 @@ const UserInput = ({
   gameResult,
   handleGameReset,
   setGameResult,
+  setIsSubmitting,
 }: UserInputProps) => {
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
@@ -85,8 +82,10 @@ const UserInput = ({
   const handleInputBlur = () => {
     setIsFocused(false)
   }
+
   const handleSubmit = async (e: any) => {
     e.persist()
+    setIsSubmitting(true)
 
     try {
       const response = await handleWordExist(guess)
@@ -108,12 +107,6 @@ const UserInput = ({
         e?.nativeEvent?.key === 'Enter' &&
         !isProperWord
       ) {
-        firstRef?.current?.focus()
-        secondRef?.current?.focus()
-        thirdRef?.current?.focus()
-        fourthRef?.current?.focus()
-        fifthRef?.current?.focus()
-
         createToast(guess)
       }
 
@@ -137,6 +130,7 @@ const UserInput = ({
         error
       )
     }
+    setIsSubmitting(false)
   }
 
   return (
@@ -155,6 +149,7 @@ const UserInput = ({
             ref={firstRef}
             caretHidden
             onBlur={handleInputBlur}
+            blurOnSubmit={false}
             style={{
               width: 50,
               height: 50,
@@ -190,7 +185,6 @@ const UserInput = ({
           required: true,
         }}
       />
-
       <View>
         {modalVisible ? (
           <PrimaryModal
