@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native'
 import { useFonts } from 'expo-font'
 import { theme } from '../src/styles/theme'
@@ -11,6 +12,8 @@ import { fetchData } from '../funcs/helpers'
 
 import UserInputs from './UserInputs'
 import FlashMessage from 'react-native-flash-message'
+import { PrimaryNavbar } from '../src/components/navbars/PrimaryNavbar'
+import PrimaryModal from '../src/components/modals/PrimaryModal'
 
 const App = () => {
   const [randomWord, setRandomWord] = useState('')
@@ -18,6 +21,8 @@ const App = () => {
   const [resetKey, setResetKey] = useState(0)
   const [gameResult, setGameResult] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
+  const [modalText, setModalText] = useState()
 
   const handleGameReset = () => {
     setResetKey((prevKey) => prevKey + 1)
@@ -40,11 +45,18 @@ const App = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <PrimaryNavbar
+        title="WORDY"
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        modalText={modalText}
+        setModalText={setModalText}
+      />
       <FlatList
         key={resetKey}
         contentContainerStyle={{
-          justifyContent: 'center',
+          marginTop: 60,
           height: '100%',
           gap: 1,
         }}
@@ -61,9 +73,24 @@ const App = () => {
             setGameResult={setGameResult}
             handleGameReset={handleGameReset}
             setIsSubmitting={setIsSubmitting}
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            modalText={modalText}
+            setModalText={setModalText}
           />
         )}
       />
+
+      {modalVisible ? (
+        <PrimaryModal
+          modalText={modalText}
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          handleGameReset={handleGameReset}
+          setGameResult={setGameResult}
+        />
+      ) : null}
+
       <FlashMessage position="top" />
 
       {isSubmitting && (
@@ -85,7 +112,7 @@ const App = () => {
           />
         </View>
       )}
-    </View>
+    </SafeAreaView>
   )
 }
 

@@ -30,14 +30,14 @@ const UserInput = ({
   setIsSubmitted,
   chanceCounter,
   setChanceCounter,
-  gameResult,
-  handleGameReset,
   setGameResult,
   setIsSubmitting,
+  setModalVisible,
+  setModalText,
 }: UserInputProps) => {
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
+
   const [isFocused, setIsFocused] = useState(false)
 
   const word: string = randomWord[0]
@@ -111,6 +111,7 @@ const UserInput = ({
       }
 
       if (chanceCounter === 6 && word !== userWord) {
+        setModalText('You lost')
         setModalVisible(true)
         setGameResult(false)
       }
@@ -121,6 +122,7 @@ const UserInput = ({
       }
 
       if (word === userWord) {
+        setModalText('You won')
         setModalVisible(true)
         setGameResult(true)
       }
@@ -185,17 +187,6 @@ const UserInput = ({
           required: true,
         }}
       />
-      <View>
-        {modalVisible ? (
-          <PrimaryModal
-            resultText={gameResult ? 'You won' : 'You lost'}
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-            handleGameReset={handleGameReset}
-            setGameResult={setGameResult}
-          />
-        ) : null}
-      </View>
     </View>
   )
 }
