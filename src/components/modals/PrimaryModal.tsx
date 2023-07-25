@@ -4,49 +4,38 @@ import {
   Text,
   Pressable,
   StyleSheet,
-  Alert,
 } from 'react-native'
 import { theme } from '../../styles/theme'
 
 const PrimaryModal = ({
   modalVisible,
   setModalVisible,
-  resultText,
+  modalText,
   handleGameReset,
   setGameResult,
 }) => {
   return (
-    <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.')
-          setModalVisible(!modalVisible)
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>
-              {resultText}
-            </Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => {
-                setModalVisible(!modalVisible)
-                setGameResult(false)
-                handleGameReset()
-              }}
-            >
-              <Text style={styles.textStyle}>
-                Hide Modal
-              </Text>
-            </Pressable>
-          </View>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>{modalText}</Text>
+          <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => {
+              setModalVisible(!modalVisible)
+              setGameResult(false)
+              handleGameReset()
+            }}
+          >
+            <Text style={styles.textStyle}>Hide Modal</Text>
+          </Pressable>
         </View>
-      </Modal>
-    </View>
+      </View>
+    </Modal>
   )
 }
 
@@ -55,7 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalView: {
     margin: 20,

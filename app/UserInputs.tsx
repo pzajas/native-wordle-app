@@ -16,6 +16,10 @@ const UserInputs = ({
   handleGameReset,
   setRandomWord,
   setIsSubmitting,
+  modalVisible,
+  setModalVisible,
+  modalText,
+  setModalText,
 }: UserInputsProps) => {
   const [guess, setGuess] = useState<string[]>([])
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -75,6 +79,10 @@ const UserInputs = ({
           key={index}
           firstRef={ref}
           name={String(index + 1)}
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          modalText={modalText}
+          setModalText={setModalText}
           {...userInputProps}
         />
       ))}
