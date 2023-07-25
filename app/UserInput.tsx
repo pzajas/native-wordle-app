@@ -8,16 +8,8 @@ import {
   NativeSyntheticEvent,
   TextInputKeyPressEventData,
 } from 'react-native'
-import {
-  createToast,
-  handleWordExist,
-} from '../funcs/helpers'
-import {
-  FormValues,
-  UserInputProps,
-} from '../src/typescript/types'
-
-import PrimaryModal from '../src/components/modals/PrimaryModal'
+import { createToast, handleWordExist } from '../funcs/helpers'
+import { FormValues, UserInputProps } from '../src/typescript/types'
 
 const UserInput = ({
   rowId,
@@ -37,7 +29,6 @@ const UserInput = ({
 }: UserInputProps) => {
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
-
   const [isFocused, setIsFocused] = useState(false)
 
   const word: string = randomWord[0]
@@ -65,9 +56,7 @@ const UserInput = ({
     e: NativeSyntheticEvent<TextInputKeyPressEventData>
   ) => {
     if (e.nativeEvent.key === 'Backspace') {
-      setGuess((prevGuess: string[]) =>
-        prevGuess.slice(0, -1)
-      )
+      setGuess((prevGuess: string[]) => prevGuess.slice(0, -1))
       setIsPresent(false)
       setIsMatch(false)
     }
@@ -83,7 +72,9 @@ const UserInput = ({
     setIsFocused(false)
   }
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (
+    e: NativeSyntheticEvent<TextInputKeyPressEventData>
+  ) => {
     e.persist()
     setIsSubmitting(true)
 
@@ -92,21 +83,14 @@ const UserInput = ({
       const userWord = guess.join('')
 
       const isProperWord =
-        response &&
-        response.status === 200 &&
-        guess.length === 5
+        response && response.status === 200 && guess.length === 5
 
       if (guess.length === 5 && isProperWord) {
         setIsSubmitted(true)
-        setChanceCounter(
-          (prevState: number) => prevState + 1
-        )
+        setChanceCounter((prevState: number) => prevState + 1)
       }
 
-      if (
-        e?.nativeEvent?.key === 'Enter' &&
-        !isProperWord
-      ) {
+      if (e?.nativeEvent?.key === 'Enter' && !isProperWord) {
         createToast(guess)
       }
 
@@ -127,10 +111,7 @@ const UserInput = ({
         setGameResult(true)
       }
     } catch (error) {
-      console.error(
-        'Error occurred during API call:',
-        error
-      )
+      console.error('Error occurred during API call:', error)
     }
     setIsSubmitting(false)
   }
@@ -170,7 +151,7 @@ const UserInput = ({
               borderColor: 'transparent',
               textTransform: 'uppercase',
               fontWeight: '800',
-              fontSize: '20',
+              fontSize: 20,
             }}
             onChangeText={(text) => {
               handleCheck(text)

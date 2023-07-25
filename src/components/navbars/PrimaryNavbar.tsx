@@ -1,12 +1,8 @@
-import React from 'react'
-import {
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-} from 'react-native'
-
+import { View, Text, StyleSheet, Platform } from 'react-native'
+import { INavbarProps } from '../../typescript/types'
 import { theme } from '../../styles/theme'
+import { iconNames } from '../../utils/dictionary'
+
 import NavbarButton from './NavbarButton'
 
 export const PrimaryNavbar = ({
@@ -14,7 +10,7 @@ export const PrimaryNavbar = ({
   modalVisible,
   setModalVisible,
   setModalText,
-}) => {
+}: INavbarProps) => {
   const iconSize = Platform.OS === 'web' ? 18 : 28
 
   return (
@@ -23,17 +19,17 @@ export const PrimaryNavbar = ({
         <NavbarButton
           onPress={() => {
             setModalVisible(!modalVisible)
-            setModalText('stats')
+            setModalText('STATISTICS')
           }}
-          iconName="user-circle"
+          iconName={iconNames.USER}
           iconSize={iconSize}
         />
         <NavbarButton
           onPress={() => {
             setModalVisible(!modalVisible)
-            setModalText('github')
+            setModalText('GITHUB')
           }}
-          iconName="github"
+          iconName={iconNames.GITHUB}
           iconSize={iconSize}
         />
       </View>
@@ -46,17 +42,17 @@ export const PrimaryNavbar = ({
         <NavbarButton
           onPress={() => {
             setModalVisible(!modalVisible)
-            setModalText('options')
+            setModalText('OPTIONS')
           }}
-          iconName="cog"
+          iconName={iconNames.COG}
           iconSize={iconSize}
         />
         <NavbarButton
           onPress={() => {
             setModalVisible(!modalVisible)
-            setModalText('info')
+            setModalText('INFORMATION')
           }}
-          iconName="question-circle"
+          iconName={iconNames.QUESTION}
           iconSize={iconSize}
         />
       </View>
@@ -80,7 +76,7 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   title: {
-    color: 'white',
+    color: theme.colors.white,
     fontSize: 30,
     fontWeight: 'bold',
     alignSelf: 'center',

@@ -9,20 +9,21 @@ import {
 import { useFonts } from 'expo-font'
 import { theme } from '../src/styles/theme'
 import { fetchData } from '../funcs/helpers'
+import { PrimaryNavbar } from '../src/components/navbars/PrimaryNavbar'
+import { ContentInformation } from '../src/components/modals/ContentInformation'
 
 import UserInputs from './UserInputs'
 import FlashMessage from 'react-native-flash-message'
-import { PrimaryNavbar } from '../src/components/navbars/PrimaryNavbar'
 import PrimaryModal from '../src/components/modals/PrimaryModal'
 
 const App = () => {
   const [randomWord, setRandomWord] = useState('')
+  const [modalText, setModalText] = useState('')
   const [chanceCounter, setChanceCounter] = useState(1)
   const [resetKey, setResetKey] = useState(0)
   const [gameResult, setGameResult] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-  const [modalText, setModalText] = useState()
 
   const handleGameReset = () => {
     setResetKey((prevKey) => prevKey + 1)
@@ -50,7 +51,6 @@ const App = () => {
         title="WORDY"
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        modalText={modalText}
         setModalText={setModalText}
       />
       <FlatList
@@ -88,7 +88,9 @@ const App = () => {
           setModalVisible={setModalVisible}
           handleGameReset={handleGameReset}
           setGameResult={setGameResult}
-        />
+        >
+          {modalText === 'INFORMATION' && <ContentInformation />}
+        </PrimaryModal>
       ) : null}
 
       <FlashMessage position="top" />
@@ -106,10 +108,7 @@ const App = () => {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
           }}
         >
-          <ActivityIndicator
-            size="large"
-            color={theme.colors.white}
-          />
+          <ActivityIndicator size="large" color={theme.colors.white} />
         </View>
       )}
     </SafeAreaView>
@@ -127,6 +126,6 @@ const styles = StyleSheet.create({
   },
   customText: {
     fontSize: 40,
-    color: 'white',
+    color: theme.colors.white,
   },
 })

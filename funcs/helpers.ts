@@ -31,9 +31,7 @@ export const handleWordExist = async (userWord) => {
 export const createToast = (userWord) => {
   showMessage({
     message:
-      userWord.length < 5
-        ? 'The word is too short'
-        : 'There is no such word!',
+      userWord.length < 5 ? 'The word is too short' : 'There is no such word!',
     type: 'danger',
     animated: true,
     position: 'bottom',
