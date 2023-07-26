@@ -5,6 +5,7 @@
       "bundler": "metro"
     },
     "name": "native-wordle-app",
-    "slug": "native-wordle-app"
+    "slug": "native-wordle-app",
+    "entryPoint": "./App.js"
   }
 }

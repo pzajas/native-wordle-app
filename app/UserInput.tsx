@@ -146,7 +146,6 @@ const UserInput = ({
                   : theme.colors.grey.dark
                 : theme.colors.grey.dark,
               textAlign: 'center',
-              outline: 'none',
               color: theme.colors.white,
               borderColor: 'transparent',
               textTransform: 'uppercase',
