@@ -10,6 +10,14 @@ import {
 } from 'react-native'
 import { createToast, handleWordExist } from '../funcs/helpers'
 import { FormValues, UserInputProps } from '../src/typescript/types'
+import { useDispatch, useSelector } from 'react-redux'
+import { incrementWins } from '../src/redux/features/winCounterSlice'
+import { incrementLoses } from '../src/redux/features/loseCounterSlice'
+import {
+  incrementWinsInRow,
+  resetWinsInRow,
+} from '../src/redux/features/winsInRowSlice'
+import { addChanceNumber } from '../src/redux/features/winsInTrySlice'
 
 const UserInput = ({
   rowId,
@@ -32,6 +40,8 @@ const UserInput = ({
   const [isFocused, setIsFocused] = useState(false)
 
   const word: string = randomWord[0]
+  const dispatch = useDispatch()
+  const items: any = useSelector((state: any) => state.winsInTry)
 
   const { register, control } = useForm<FormValues>()
 
@@ -95,6 +105,8 @@ const UserInput = ({
       }
 
       if (chanceCounter === 6 && word !== userWord) {
+        dispatch(incrementLoses())
+        dispatch(resetWinsInRow())
         setModalText('You lost')
         setModalVisible(true)
         setGameResult(false)
@@ -106,6 +118,9 @@ const UserInput = ({
       }
 
       if (word === userWord) {
+        dispatch(incrementWins())
+        dispatch(incrementWinsInRow())
+        dispatch(addChanceNumber(chanceCounter))
         setModalText('You won')
         setModalVisible(true)
         setGameResult(true)
@@ -161,6 +176,7 @@ const UserInput = ({
             editable={!isSubmitted}
             maxLength={1}
             returnKeyType="default"
+            autoCapitalize="characters"
           />
         )}
         rules={{

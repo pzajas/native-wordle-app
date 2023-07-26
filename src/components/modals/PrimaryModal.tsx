@@ -17,42 +17,35 @@ const PrimaryModal = ({
   setGameResult,
   children,
 }: IPrimaryModal) => {
+  const isShortModal = modalText === 'STATISTICS' || modalText === 'OPTIONS'
+
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      style={{ height: '80%' }}
-    >
+    <Modal animationType="slide" transparent={true} visible={modalVisible}>
       <View style={styles.centeredView}>
-        <View style={styles.modalView}>
+        <View
+          style={[styles.modalView, { height: isShortModal ? '60%' : '100%' }]}
+        >
           <TouchableOpacity
             style={[styles.touchableContainer, { outline: 'none' }]}
             onPress={() => setModalVisible(!modalVisible)}
           >
             <Text style={styles.modalText}>{modalText}</Text>
             {children}
-            {modalText === 'INFORMATION' ? (
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
+
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => {
+                if (modalText === 'INFORMATION' || modalText === 'STATISTICS') {
                   setModalVisible(!modalVisible)
-                }}
-              >
-                <Text style={styles.textStyle}>Hide Info</Text>
-              </Pressable>
-            ) : (
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
+                } else {
                   setModalVisible(!modalVisible)
                   setGameResult(false)
                   handleGameReset()
-                }}
-              >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Pressable>
-            )}
+                }
+              }}
+            >
+              <Text style={styles.textStyle}>Hide Info</Text>
+            </Pressable>
           </TouchableOpacity>
         </View>
       </View>

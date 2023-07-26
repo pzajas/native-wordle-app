@@ -18,6 +18,7 @@ import { store, persistor } from '../src/redux/store/store'
 import UserInputs from './UserInputs'
 import FlashMessage from 'react-native-flash-message'
 import PrimaryModal from '../src/components/modals/PrimaryModal'
+import ContentStatistics from '../src/components/modals/ContentStatistics'
 
 export const App = () => {
   const [randomWord, setRandomWord] = useState('')
@@ -95,6 +96,7 @@ export const App = () => {
               setGameResult={setGameResult}
             >
               {modalText === 'INFORMATION' && <ContentInformation />}
+              {modalText === 'STATISTICS' && <ContentStatistics />}
             </PrimaryModal>
           ) : null}
 
