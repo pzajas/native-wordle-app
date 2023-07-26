@@ -1,10 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 import UserInput from './UserInput'
-import {
-  TextInputRef,
-  UserInputsProps,
-} from '../src/typescript/types'
+import { TextInputRef, UserInputsProps } from '../src/typescript/types'
 
 const UserInputs = ({
   randomWord,
@@ -30,13 +27,7 @@ const UserInputs = ({
   const fourthRef: TextInputRef = useRef(null)
   const fifthRef: TextInputRef = useRef(null)
 
-  const inputRefs = useRef([
-    firstRef,
-    secondRef,
-    thirdRef,
-    fourthRef,
-    fifthRef,
-  ])
+  const inputRefs = useRef([firstRef, secondRef, thirdRef, fourthRef, fifthRef])
 
   useEffect(() => {
     if (guess.length === 0 && rowId === chanceCounter) {
@@ -70,6 +61,8 @@ const UserInputs = ({
     fourthRef: fourthRef,
     fifthRef: fifthRef,
     setIsSubmitting: setIsSubmitting,
+    setModalVisible: setModalVisible,
+    setModalText: setModalText,
   }
 
   return (
@@ -79,10 +72,6 @@ const UserInputs = ({
           key={index}
           firstRef={ref}
           name={String(index + 1)}
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          modalText={modalText}
-          setModalText={setModalText}
           {...userInputProps}
         />
       ))}
