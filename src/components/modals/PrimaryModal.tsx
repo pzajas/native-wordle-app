@@ -17,7 +17,7 @@ const PrimaryModal = ({
   setGameResult,
   children,
 }: IPrimaryModal) => {
-  const isShortModal = modalText === 'STATISTICS' || modalText === 'OPTIONS'
+  const isShortModal = modalText === 'OPTIONS'
 
   return (
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
