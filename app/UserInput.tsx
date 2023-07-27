@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { createToast, handleWordExist } from '../funcs/helpers'
 import { FormValues, UserInputProps } from '../src/typescript/types'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { incrementWins } from '../src/redux/features/winCounterSlice'
 import { incrementLoses } from '../src/redux/features/loseCounterSlice'
 import {
@@ -41,7 +41,6 @@ const UserInput = ({
 
   const word: string = randomWord[0]
   const dispatch = useDispatch()
-  const items: any = useSelector((state: any) => state.winsInTry)
 
   const { register, control } = useForm<FormValues>()
 

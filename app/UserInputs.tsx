@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
-import UserInput from './UserInput'
 import { TextInputRef, UserInputsProps } from '../src/typescript/types'
+
+import UserInput from './UserInput'
 
 const UserInputs = ({
   randomWord,
@@ -13,9 +14,7 @@ const UserInputs = ({
   handleGameReset,
   setRandomWord,
   setIsSubmitting,
-  modalVisible,
   setModalVisible,
-  modalText,
   setModalText,
 }: UserInputsProps) => {
   const [guess, setGuess] = useState<string[]>([])
