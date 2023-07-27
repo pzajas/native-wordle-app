@@ -1,9 +1,9 @@
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 import { VictoryChart, VictoryBar, VictoryAxis } from 'victory-native'
 import { theme } from '../../styles/theme'
 
-const VerticalBarChart = () => {
+const VerticalBarChart = ({ text }: { text: string }) => {
   const wins: number = useSelector((state: any) => state.wins)
   const loses: number = useSelector((state: any) => state.loses)
 
@@ -15,6 +15,7 @@ const VerticalBarChart = () => {
 
   return (
     <View>
+      <Text style={{ color: theme.colors.white }}>{text}</Text>
       <VictoryChart height={300} width={300} domainPadding={{ x: [5, 5] }}>
         <VictoryBar
           data={data}

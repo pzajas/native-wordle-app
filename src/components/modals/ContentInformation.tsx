@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { View, Text, StyleSheet } from 'react-native'
 import { theme } from '../../styles/theme'
 import { informationModal } from '../../utils/dictionary'

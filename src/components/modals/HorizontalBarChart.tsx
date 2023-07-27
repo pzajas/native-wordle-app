@@ -1,9 +1,9 @@
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 import { VictoryChart, VictoryBar, VictoryAxis } from 'victory-native'
 import { theme } from '../../styles/theme'
 
-const HorizontalBarChart = () => {
+const HorizontalBarChart = ({ text }: { text: string }) => {
   const chancesArray: any = useSelector((state: any) => state.winsInTry)
 
   const filterArr = (array: [], number: number) => {
@@ -19,7 +19,8 @@ const HorizontalBarChart = () => {
 
   return (
     <View>
-      <VictoryChart height={200} width={300}>
+      <Text style={{ color: theme.colors.white }}>{text}</Text>
+      <VictoryChart height={200} width={300} domainPadding={{ x: [0, 0] }}>
         <VictoryBar
           data={data}
           horizontal
