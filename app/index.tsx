@@ -10,15 +10,15 @@ import { useFonts } from 'expo-font'
 import { theme } from '../src/styles/theme'
 import { fetchData } from '../funcs/helpers'
 import { PrimaryNavbar } from '../src/components/navbars/PrimaryNavbar'
-import { ContentInformation } from '../src/components/modals/ContentInformation'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import { PrimaryModal } from '../src/components/modals/PrimaryModal'
 import { store, persistor } from '../src/redux/store/store'
+import { ContentInformation } from '../src/components/modals/modalContents/ContentInformation'
+import { ContentStatistics } from '../src/components/modals/modalContents/ContentStatistics'
 
 import UserInputs from './UserInputs'
 import FlashMessage from 'react-native-flash-message'
-import PrimaryModal from '../src/components/modals/PrimaryModal'
-import ContentStatistics from '../src/components/modals/ContentStatistics'
 
 export const App = () => {
   const [randomWord, setRandomWord] = useState('')

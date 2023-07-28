@@ -1,9 +1,9 @@
 /* eslint-disable indent */
 import { View, Text, StyleSheet } from 'react-native'
-import { theme } from '../../styles/theme'
-import { informationModal } from '../../utils/dictionary'
 import { FunctionComponent } from 'react'
-import { LettersArray, WordExampleProps } from '../../typescript/types'
+import { theme } from '../../../styles/theme'
+import { LettersArray, WordExampleProps } from '../../../typescript/types'
+import { informationModal } from '../../../utils/dictionary'
 
 const ContentText = ({ children }: { children: string }) => {
   const words = children.split(' ')

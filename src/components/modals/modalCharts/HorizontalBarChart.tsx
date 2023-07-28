@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 import { VictoryChart, VictoryBar, VictoryAxis } from 'victory-native'
-import { theme } from '../../styles/theme'
+import { theme } from '../../../styles/theme'
 
-const HorizontalBarChart = ({ text }: { text: string }) => {
+export const HorizontalBarChart = ({ text }: { text: string }) => {
   const chancesArray: any = useSelector((state: any) => state.winsInTry)
 
   const filterArr = (array: [], number: number) => {
@@ -55,5 +55,3 @@ const HorizontalBarChart = ({ text }: { text: string }) => {
     </View>
   )
 }
-
-export default HorizontalBarChart
