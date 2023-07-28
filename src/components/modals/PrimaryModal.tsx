@@ -16,6 +16,7 @@ const PrimaryModal = ({
   handleGameReset,
   setGameResult,
   children,
+  randomWord,
 }: IPrimaryModal) => {
   const isShortModal = modalText === 'OPTIONS'
 
@@ -26,10 +27,13 @@ const PrimaryModal = ({
           style={[styles.modalView, { height: isShortModal ? '60%' : '100%' }]}
         >
           <TouchableOpacity
-            style={[styles.touchableContainer, { outline: 'none' }]}
+            style={styles.touchableContainer}
             onPress={() => setModalVisible(!modalVisible)}
           >
-            <Text style={styles.modalText}>{modalText}</Text>
+            <Text style={styles.modalText}>
+              {modalText}:
+              <Text style={{ color: theme.colors.yellow }}> {randomWord}</Text>
+            </Text>
             {children}
 
             <Pressable
