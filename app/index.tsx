@@ -94,9 +94,12 @@ export const App = () => {
               setModalVisible={setModalVisible}
               handleGameReset={handleGameReset}
               setGameResult={setGameResult}
+              randomWord={randomWord}
             >
               {modalText === 'INFORMATION' && <ContentInformation />}
               {modalText === 'STATISTICS' && <ContentStatistics />}
+              {modalText === 'YOU WON' && <ContentStatistics />}
+              {modalText === 'GAME OVER' && <ContentStatistics />}
             </PrimaryModal>
           ) : null}
 

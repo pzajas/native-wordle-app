@@ -106,7 +106,7 @@ const UserInput = ({
       if (chanceCounter === 6 && word !== userWord) {
         dispatch(incrementLoses())
         dispatch(resetWinsInRow())
-        setModalText('You lost')
+        setModalText('GAME OVER')
         setModalVisible(true)
         setGameResult(false)
       }
@@ -120,7 +120,7 @@ const UserInput = ({
         dispatch(incrementWins())
         dispatch(incrementWinsInRow())
         dispatch(addChanceNumber(chanceCounter))
-        setModalText('You won')
+        setModalText('YOU WON')
         setModalVisible(true)
         setGameResult(true)
       }

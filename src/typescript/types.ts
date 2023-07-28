@@ -79,6 +79,7 @@ export interface INavbarProps {
 
 export interface IPrimaryModal {
   modalText: string
+  randomWord: string
   modalVisible: boolean
   setModalVisible: Dispatch<SetStateAction<boolean>>
   setGameResult: Dispatch<SetStateAction<boolean>>
