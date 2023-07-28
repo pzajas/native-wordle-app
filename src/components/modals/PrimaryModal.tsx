@@ -9,7 +9,7 @@ import {
 import { theme } from '../../styles/theme'
 import { IPrimaryModal } from '../../typescript/types'
 
-const PrimaryModal = ({
+export const PrimaryModal = ({
   modalVisible,
   setModalVisible,
   modalText,
@@ -22,17 +22,21 @@ const PrimaryModal = ({
 
   return (
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
-      <View style={styles.centeredView}>
+      <View style={[styles.centeredView]}>
         <View
           style={[styles.modalView, { height: isShortModal ? '60%' : '100%' }]}
         >
           <TouchableOpacity
-            style={styles.touchableContainer}
+            style={[styles.touchableContainer, { outline: 'none' }]}
             onPress={() => setModalVisible(!modalVisible)}
           >
             <Text style={styles.modalText}>
               {modalText}:
-              <Text style={{ color: theme.colors.yellow }}> {randomWord}</Text>
+              <Text style={{ color: theme.colors.yellow }}>
+                {modalText == 'YOU WON' || modalText == 'GAME OVER'
+                  ? ` ${randomWord}`
+                  : ''}
+              </Text>
             </Text>
             {children}
 
@@ -111,5 +115,3 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 })
-
-export default PrimaryModal

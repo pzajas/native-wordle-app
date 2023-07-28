@@ -1,9 +1,9 @@
 import { StyleSheet, View } from 'react-native'
-import VerticalBarChart from './VerticalBarChart'
-import HorizontalBarChart from './HorizontalBarChart'
-import { theme } from '../../styles/theme'
+import { theme } from '../../../styles/theme'
+import { VerticalBarChart } from '../modalCharts/VerticalBarChart'
+import { HorizontalBarChart } from '../modalCharts/HorizontalBarChart'
 
-const ContentStatistics = () => {
+export const ContentStatistics = () => {
   return (
     <View style={styles.container}>
       <VerticalBarChart text={'Wins and loses breakdown'} />
@@ -11,8 +11,6 @@ const ContentStatistics = () => {
     </View>
   )
 }
-
-export default ContentStatistics
 
 const styles = StyleSheet.create({
   container: {
