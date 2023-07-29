@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import { createToast, handleWordExist } from '../funcs/helpers'
 import { FormValues, UserInputProps } from '../src/typescript/types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { incrementWins } from '../src/redux/features/winCounterSlice'
 import { incrementLoses } from '../src/redux/features/loseCounterSlice'
 import {
@@ -18,6 +18,7 @@ import {
   resetWinsInRow,
 } from '../src/redux/features/winsInRowSlice'
 import { addChanceNumber } from '../src/redux/features/winsInTrySlice'
+import { getStyles } from '../src/styles/styles'
 
 const UserInput = ({
   rowId,
@@ -43,6 +44,8 @@ const UserInput = ({
   const dispatch = useDispatch()
 
   const { register, control } = useForm<FormValues>()
+
+  const theme = useSelector((state) => state.theme) // Access the current theme from the Redux store.
 
   const handleCheck = (text: string) => {
     if (text) {
@@ -151,20 +154,22 @@ const UserInput = ({
               width: 50,
               height: 50,
               backgroundColor: isFocused
-                ? theme.colors.grey.light
+                ? theme.focused
                 : isSubmitted
                 ? isMatch
-                  ? theme.colors.green
+                  ? theme.match
                   : isPresent
-                  ? theme.colors.yellow
-                  : theme.colors.grey.dark
-                : theme.colors.grey.dark,
+                  ? theme.present
+                  : theme.secondaryColor
+                : theme.secondaryColor,
+              color: theme.primaryTextColor,
               textAlign: 'center',
-              color: theme.colors.white,
               borderColor: 'transparent',
               textTransform: 'uppercase',
               fontWeight: '800',
               fontSize: 20,
+              outline: 'none',
+              borderRadius: 5,
             }}
             onChangeText={(text) => {
               handleCheck(text)

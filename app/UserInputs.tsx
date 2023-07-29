@@ -1,8 +1,10 @@
 import { useRef, useState, useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View } from 'react-native'
 import { TextInputRef, UserInputsProps } from '../src/typescript/types'
 
 import UserInput from './UserInput'
+import { useSelector } from 'react-redux'
+import { getStyles } from '../src/styles/styles'
 
 const UserInputs = ({
   randomWord,
@@ -27,6 +29,9 @@ const UserInputs = ({
   const fifthRef: TextInputRef = useRef(null)
 
   const inputRefs = useRef([firstRef, secondRef, thirdRef, fourthRef, fifthRef])
+
+  const selectedTheme = useSelector((state) => state.theme)
+  const styles = getStyles(selectedTheme)
 
   useEffect(() => {
     if (guess.length === 0 && rowId === chanceCounter) {
@@ -65,7 +70,7 @@ const UserInputs = ({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.userInputsWrapper}>
       {inputRefs.current.map((ref, index) => (
         <UserInput
           key={index}
@@ -77,15 +82,5 @@ const UserInputs = ({
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 1,
-  },
-})
 
 export default UserInputs

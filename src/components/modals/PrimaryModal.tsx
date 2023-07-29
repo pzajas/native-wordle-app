@@ -6,8 +6,9 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native'
-import { theme } from '../../styles/theme'
 import { IPrimaryModal } from '../../typescript/types'
+import { useSelector } from 'react-redux'
+import { getStyles } from '../../styles/styles'
 
 export const PrimaryModal = ({
   modalVisible,
@@ -18,21 +19,24 @@ export const PrimaryModal = ({
   children,
   randomWord,
 }: IPrimaryModal) => {
+  const selectedTheme = useSelector((state) => state.theme)
+  const stylez = getStyles(selectedTheme)
+
   const isShortModal = modalText === 'OPTIONS'
 
   return (
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
       <View style={[styles.centeredView]}>
         <View
-          style={[styles.modalView, { height: isShortModal ? '60%' : '100%' }]}
+          style={[stylez.modalView, { height: isShortModal ? '60%' : '100%' }]}
         >
           <TouchableOpacity
             style={[styles.touchableContainer, { outline: 'none' }]}
-            onPress={() => setModalVisible(!modalVisible)}
+            // onPress={() => setModalVisible(!modalVisible)}
           >
             <Text style={styles.modalText}>
               {modalText}:
-              <Text style={{ color: theme.colors.yellow }}>
+              <Text style={{ color: selectedTheme.match }}>
                 {modalText == 'YOU WON' || modalText == 'GAME OVER'
                   ? ` ${randomWord}`
                   : ''}
@@ -68,24 +72,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  modalView: {
-    height: '100%',
-    width: '100%',
-    margin: 20,
-    backgroundColor: theme.colors.black,
-    borderColor: theme.colors.white,
-    borderWidth: 1,
-    padding: 50,
-    alignItems: 'center',
-    shadowColor: theme.colors.green,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
+
   touchableContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -98,10 +85,10 @@ const styles = StyleSheet.create({
     outlineWidth: 0,
   },
   buttonClose: {
-    backgroundColor: theme.colors.yellow,
+    backgroundColor: '#b49c3c',
   },
   textStyle: {
-    color: theme.colors.white,
+    color: '#fff',
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -110,7 +97,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     fontWeight: 'bold',
-    color: theme.colors.white,
+    color: '#fff',
     textDecorationLine: 'underline',
     marginTop: 10,
   },
