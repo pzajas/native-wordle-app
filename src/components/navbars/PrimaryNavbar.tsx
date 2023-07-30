@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet, Platform } from 'react-native'
+import { View, Text, Platform } from 'react-native'
 import { INavbarProps } from '../../typescript/types'
-import { theme } from '../../styles/theme'
+
 import { iconNames } from '../../utils/dictionary'
 
 import NavbarButton from './NavbarButton'
+import { useSelector } from 'react-redux'
+import { getStyles } from '../../styles/styles'
 
 export const PrimaryNavbar = ({
   title,
@@ -13,9 +15,12 @@ export const PrimaryNavbar = ({
 }: INavbarProps) => {
   const iconSize = Platform.OS === 'web' ? 18 : 28
 
+  const theme = useSelector((state) => state.theme)
+  const styles = getStyles(theme)
+
   return (
-    <View style={styles.container}>
-      <View style={[styles.buttons, { marginLeft: 20 }]}>
+    <View style={styles.navbarContainer}>
+      <View style={[styles.navbarButtons, { marginLeft: 20 }]}>
         <NavbarButton
           onPress={() => {
             setModalVisible(!modalVisible)
@@ -35,10 +40,10 @@ export const PrimaryNavbar = ({
       </View>
 
       <View>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.navbarTitle}>{title}</Text>
       </View>
 
-      <View style={[styles.buttons, { marginRight: 20 }]}>
+      <View style={[styles.navbarButtons, { marginRight: 20 }]}>
         <NavbarButton
           onPress={() => {
             setModalVisible(!modalVisible)
@@ -59,26 +64,3 @@ export const PrimaryNavbar = ({
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: 80,
-    width: '100%',
-    backgroundColor: theme.colors.black,
-    borderBottomColor: theme.colors.grey.light,
-    borderBottomWidth: 1,
-  },
-  buttons: {
-    flexDirection: 'row',
-    gap: 15,
-  },
-  title: {
-    color: theme.colors.white,
-    fontSize: 30,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-  },
-})

@@ -1,28 +1,17 @@
-import { StyleSheet, View } from 'react-native'
-import { theme } from '../../../styles/theme'
+import { View } from 'react-native'
 import { VerticalBarChart } from '../modalCharts/VerticalBarChart'
 import { HorizontalBarChart } from '../modalCharts/HorizontalBarChart'
+import { useSelector } from 'react-redux'
+import { getStyles } from '../../../styles/styles'
 
 export const ContentStatistics = () => {
+  const selectedTheme = useSelector((state) => state.theme)
+  const styles = getStyles(selectedTheme)
+
   return (
-    <View style={styles.container}>
+    <View style={styles.statisticsModalContainer}>
       <VerticalBarChart text={'Wins and loses breakdown'} />
       <HorizontalBarChart text={'Wins in particular tries'} />
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    width: '100%',
-    gap: 20,
-    marginTop: 20,
-    justifyContent: 'center',
-    textAlign: 'center',
-  },
-  text: {
-    color: theme.colors.yellow,
-    fontWeight: 'bold',
-  },
-})

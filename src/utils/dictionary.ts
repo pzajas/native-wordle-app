@@ -1,6 +1,6 @@
 export const informationModal = {
   introduction:
-    'Enjoy: the challenge of Wordy, improve your vocabulary, and sharpen your logical reasoning skills as you try to uncover the mystery word! Happy Wordling!',
+    'Enjoy: The challenge of Wordy, improve your vocabulary, and sharpen your logical reasoning skills as you try to uncover the mystery word! Happy Wordling!',
   objective:
     'Objective: Wordy is an exciting word puzzle game where your main goal is to correctly guess a five-letter word within six attempts. Each attempt will provide feedback to help you deduce the correct word.',
   guessing:

@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 import { VictoryChart, VictoryBar, VictoryAxis } from 'victory-native'
-import { theme } from '../../../styles/theme'
 
 export const HorizontalBarChart = ({ text }: { text: string }) => {
   const chancesArray: any = useSelector((state: any) => state.winsInTry)
+  const theme = useSelector((state) => state.theme)
 
   const filterArr = (array: [], number: number) => {
     const filtered = array.filter((item) => item === number)
@@ -19,7 +19,7 @@ export const HorizontalBarChart = ({ text }: { text: string }) => {
 
   return (
     <View>
-      <Text style={{ color: theme.colors.white }}>{text}</Text>
+      <Text style={{ color: theme.primaryTextColor }}>{text}</Text>
       <VictoryChart height={200} width={300} domainPadding={{ x: [0, 0] }}>
         <VictoryBar
           data={data}
@@ -29,12 +29,12 @@ export const HorizontalBarChart = ({ text }: { text: string }) => {
           labels={({ datum }) => datum.value}
           style={{
             data: {
-              fill: theme.colors.grey.dark,
+              fill: theme.primaryTextColor,
               width: 15,
             },
             labels: {
               fontSize: 12,
-              fill: theme.colors.white,
+              fill: theme.primaryTextColor,
             },
           }}
         />
@@ -42,13 +42,17 @@ export const HorizontalBarChart = ({ text }: { text: string }) => {
           dependentAxis
           style={{
             axis: { stroke: 'transparent' },
-            tickLabels: { fontSize: 12, fill: theme.colors.white, opacity: 0 },
+            tickLabels: {
+              fontSize: 12,
+              fill: theme.primaryTextColor,
+              opacity: 0,
+            },
           }}
         />
         <VictoryAxis
           style={{
             axis: { stroke: 'transparent' },
-            tickLabels: { fontSize: 12, fill: theme.colors.white },
+            tickLabels: { fontSize: 12, fill: theme.primaryTextColor },
           }}
         />
       </VictoryChart>
