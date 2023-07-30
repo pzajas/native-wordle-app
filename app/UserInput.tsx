@@ -161,10 +161,11 @@ const UserInput = ({
                   : isPresent
                   ? theme.present
                   : theme.secondaryColor
-                : theme.secondaryColor,
-              color: theme.primaryTextColor,
+                : theme.primaryColor,
+              color: isSubmitted ? theme.white : theme.primaryTextColor,
               textAlign: 'center',
-              borderColor: 'transparent',
+              borderColor: 'grey',
+              borderWidth: 1,
               textTransform: 'uppercase',
               fontWeight: '800',
               fontSize: 20,

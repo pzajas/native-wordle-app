@@ -27,6 +27,7 @@ export type LettersArray =
   | 'T'
   | 'E'
   | 'S'
+  | 'Z'
 
 export interface UserInputsProps {
   randomWord: string

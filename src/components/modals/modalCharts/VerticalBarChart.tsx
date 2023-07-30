@@ -1,11 +1,12 @@
 import { View, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 import { VictoryChart, VictoryBar, VictoryAxis } from 'victory-native'
-import { theme } from '../../../styles/theme'
 
 export const VerticalBarChart = ({ text }: { text: string }) => {
   const wins: number = useSelector((state: any) => state.wins)
   const loses: number = useSelector((state: any) => state.loses)
+
+  const theme = useSelector((state) => state.theme)
 
   const data = [
     { category: 'games', value: wins + loses },
@@ -15,7 +16,7 @@ export const VerticalBarChart = ({ text }: { text: string }) => {
 
   return (
     <View>
-      <Text style={{ color: theme.colors.white }}>{text}</Text>
+      <Text style={{ color: theme.primaryTextColor }}>{text}</Text>
       <VictoryChart height={300} width={300} domainPadding={{ x: [5, 5] }}>
         <VictoryBar
           data={data}
@@ -24,12 +25,12 @@ export const VerticalBarChart = ({ text }: { text: string }) => {
           labels={({ datum }) => datum.value}
           style={{
             data: {
-              fill: theme.colors.grey.dark,
+              fill: theme.primaryTextColor,
               width: 50,
             },
             labels: {
               fontSize: 12,
-              fill: theme.colors.white,
+              fill: theme.primaryTextColor,
             },
           }}
         />
@@ -37,13 +38,20 @@ export const VerticalBarChart = ({ text }: { text: string }) => {
           dependentAxis
           style={{
             axis: { stroke: 'transparent' },
-            tickLabels: { fontSize: 12, fill: theme.colors.white, opacity: 0 },
+            tickLabels: {
+              fontSize: 12,
+              fill: theme.primaryTextColor,
+              opacity: 0,
+            },
           }}
         />
         <VictoryAxis
           style={{
             axis: { stroke: 'transparent' },
-            tickLabels: { fontSize: 12, fill: theme.colors.white },
+            tickLabels: {
+              fontSize: 12,
+              fill: theme.primaryTextColor,
+            },
           }}
         />
       </VictoryChart>

@@ -5,23 +5,33 @@ const themePresets = {
     primaryColor: '#181818',
     secondaryColor: '#3c3c3c',
 
-    primaryTextColor: 'white',
+    primaryTextColor: '#fff',
 
     normal: '#3c3c3c',
-    focused: '#555555',
+    focused: '#252525',
     match: '#548c4c',
     present: '#b49c3c',
+
+    white: '#fff',
+    black: '#181818',
+    green: '#548c4c',
+    red: 'red',
   },
   light: {
     primaryColor: '#fff',
     secondaryColor: 'grey',
 
-    primaryTextColor: 'black',
+    primaryTextColor: 'rgba(55,55,55,255)',
 
     normal: 'grey',
-    focused: 'lightgrey',
+    focused: '#f2f2f2',
     match: '#548c4c',
     present: '#b49c3c',
+
+    white: '#fff',
+    black: '#181818',
+    green: '#548c4c',
+    red: 'red',
   },
 }
 

@@ -1,11 +1,4 @@
-import {
-  View,
-  Modal,
-  Text,
-  Pressable,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native'
+import { View, Modal, Text, Pressable, TouchableOpacity } from 'react-native'
 import { IPrimaryModal } from '../../typescript/types'
 import { useSelector } from 'react-redux'
 import { getStyles } from '../../styles/styles'
@@ -19,24 +12,27 @@ export const PrimaryModal = ({
   children,
   randomWord,
 }: IPrimaryModal) => {
-  const selectedTheme = useSelector((state) => state.theme)
-  const stylez = getStyles(selectedTheme)
+  const theme = useSelector((state) => state.theme)
+  const styles = getStyles(theme)
 
   const isShortModal = modalText === 'OPTIONS'
 
   return (
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
-      <View style={[styles.centeredView]}>
+      <View style={[styles.primaryModalCenteredView]}>
         <View
-          style={[stylez.modalView, { height: isShortModal ? '60%' : '100%' }]}
+          style={[styles.modalView, { height: isShortModal ? '60%' : '100%' }]}
         >
           <TouchableOpacity
-            style={[styles.touchableContainer, { outline: 'none' }]}
-            // onPress={() => setModalVisible(!modalVisible)}
+            style={[styles.primaryModalTouchableContainer, { outline: 'none' }]}
           >
-            <Text style={styles.modalText}>
+            <Text style={styles.primaryModalText}>
               {modalText}:
-              <Text style={{ color: selectedTheme.match }}>
+              <Text
+                style={{
+                  color: modalText === 'YOU WON' ? theme.green : theme.red,
+                }}
+              >
                 {modalText == 'YOU WON' || modalText == 'GAME OVER'
                   ? ` ${randomWord}`
                   : ''}
@@ -45,7 +41,10 @@ export const PrimaryModal = ({
             {children}
 
             <Pressable
-              style={[styles.button, styles.buttonClose]}
+              style={[
+                styles.primaryModalButton,
+                styles.primaryModalButtonClose,
+              ]}
               onPress={() => {
                 if (modalText === 'INFORMATION' || modalText === 'STATISTICS') {
                   setModalVisible(!modalVisible)
@@ -56,7 +55,7 @@ export const PrimaryModal = ({
                 }
               }}
             >
-              <Text style={styles.textStyle}>Hide Info</Text>
+              <Text style={styles.primaryModalTextStyle}>Hide Info</Text>
             </Pressable>
           </TouchableOpacity>
         </View>
@@ -64,41 +63,3 @@ export const PrimaryModal = ({
     </Modal>
   )
 }
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-
-  touchableContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    padding: 10,
-    elevation: 2,
-    marginVertical: 10,
-    outlineWidth: 0,
-  },
-  buttonClose: {
-    backgroundColor: '#b49c3c',
-  },
-  textStyle: {
-    color: '#fff',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-    textDecorationLine: 'underline',
-    marginTop: 10,
-  },
-})

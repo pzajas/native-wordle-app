@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { FlatList, View, ActivityIndicator, SafeAreaView } from 'react-native'
 import { useFonts } from 'expo-font'
-import { theme } from '../src/styles/theme'
 import { fetchData } from '../funcs/helpers'
 import { PrimaryNavbar } from '../src/components/navbars/PrimaryNavbar'
 import { PrimaryModal } from '../src/components/modals/PrimaryModal'
