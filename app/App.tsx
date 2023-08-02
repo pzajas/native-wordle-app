@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { FlatList, View, ActivityIndicator, SafeAreaView } from 'react-native'
 import { useFonts } from 'expo-font'
 import { fetchData } from '../funcs/helpers'
@@ -7,39 +7,43 @@ import { PrimaryModal } from '../src/components/modals/PrimaryModal'
 import { ContentInformation } from '../src/components/modals/modalContents/ContentInformation'
 import { ContentStatistics } from '../src/components/modals/modalContents/ContentStatistics'
 import { getStyles } from '../src/styles/styles'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setRandomWord } from '../src/redux/features/stringsSlice'
+import { setChanceCounter, setResetKey } from '../src/redux/features/numbersSlice'
+import { setIsSubmitting } from '../src/redux/features/booleanSlice'
+import { IRootState } from '../src/typescript/types'
 
 import UserInputs from './UserInputs'
 import FlashMessage from 'react-native-flash-message'
 import ContentOptions from '../src/components/modals/modalContents/ContentOptions'
 
 export const App = () => {
-  const [randomWord, setRandomWord] = useState('')
-  const [modalText, setModalText] = useState('')
-  const [chanceCounter, setChanceCounter] = useState(1)
-  const [resetKey, setResetKey] = useState(0)
-  const [gameResult, setGameResult] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
+  const { randomWord, modalText } = useSelector((state: IRootState) => state.strings)
+  const { chanceCounter, resetKey } = useSelector((state: IRootState) => state.numbers)
+  const { isSubmitting, isModalVisible } = useSelector((state: IRootState) => state.boolean)
 
-  const theme = useSelector((state) => state.theme)
+  const dispatch = useDispatch()
+
+  const theme = useSelector((state: IRootState) => state.theme)
   const styles = getStyles(theme)
 
   const handleGameReset = () => {
-    setResetKey((prevKey) => prevKey + 1)
-    setChanceCounter(1)
+    dispatch(setResetKey(1))
+    dispatch(setChanceCounter(1))
+    dispatch(setIsSubmitting(false))
 
-    void fetchData(setRandomWord)
+    void fetchData(dispatch, setRandomWord)
   }
-  console.log(randomWord)
 
   const [fontLoaded] = useFonts({
     'custom-font': require('../assets/fonts/Poppins-Bold.ttf'),
   })
 
   useEffect(() => {
-    void fetchData(setRandomWord)
+    void fetchData(dispatch, setRandomWord)
   }, [])
+
+  console.log(randomWord, chanceCounter)
 
   if (!fontLoaded) {
     return null
@@ -47,45 +51,17 @@ export const App = () => {
 
   return (
     <SafeAreaView style={styles.appWrapper}>
-      <PrimaryNavbar
-        title="WORDY"
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        setModalText={setModalText}
-      />
+      <PrimaryNavbar title="WORDY" />
       <FlatList
         key={resetKey}
         contentContainerStyle={styles.appFlatList}
         data={[1, 2, 3, 4, 5, 6]}
         keyExtractor={(item) => item.toString()}
-        renderItem={({ item }) => (
-          <UserInputs
-            rowId={item}
-            randomWord={randomWord}
-            setRandomWord={setRandomWord}
-            chanceCounter={chanceCounter}
-            setChanceCounter={setChanceCounter}
-            gameResult={gameResult}
-            setGameResult={setGameResult}
-            handleGameReset={handleGameReset}
-            setIsSubmitting={setIsSubmitting}
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-            modalText={modalText}
-            setModalText={setModalText}
-          />
-        )}
+        renderItem={({ item }) => <UserInputs handleGameReset={handleGameReset} rowId={item} />}
       />
 
-      {modalVisible ? (
-        <PrimaryModal
-          modalText={modalText}
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          handleGameReset={handleGameReset}
-          setGameResult={setGameResult}
-          randomWord={randomWord}
-        >
+      {isModalVisible ? (
+        <PrimaryModal handleGameReset={handleGameReset}>
           {modalText === 'INFORMATION' && <ContentInformation />}
           {modalText === 'STATISTICS' && <ContentStatistics />}
           {modalText === 'YOU WON' && <ContentStatistics />}
