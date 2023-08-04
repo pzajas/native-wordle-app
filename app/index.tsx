@@ -4,6 +4,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from '../src/redux/store/store'
 import { theme } from '../src/styles/theme'
 
+import 'expo-router/entry'
 import App from './App'
 
 export const index = () => {
