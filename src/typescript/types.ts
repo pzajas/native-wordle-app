@@ -25,6 +25,7 @@ export interface UserInputsProps {
 
 export interface UserInputProps {
   name: string
+  rowId: number
   isSubmitted: boolean
   guess: string[]
   setIsSubmitted: Dispatch<SetStateAction<boolean>>
