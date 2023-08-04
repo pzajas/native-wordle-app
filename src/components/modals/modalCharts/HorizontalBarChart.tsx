@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { VictoryChart, VictoryBar, VictoryAxis } from 'victory-native'
 
 export const HorizontalBarChart = ({ text }: { text: string }) => {
-  const chancesArray: any = useSelector((state: any) => state.winsInTry)
+  const { winsInTry }: any = useSelector((state: any) => state.numbers)
   const theme = useSelector((state) => state.theme)
 
   const filterArr = (array: [], number: number) => {
@@ -14,7 +14,7 @@ export const HorizontalBarChart = ({ text }: { text: string }) => {
 
   const data = Array.from({ length: 6 }).map((_, index) => ({
     category: `${6 - index}`,
-    value: filterArr(chancesArray, 6 - index),
+    value: filterArr(winsInTry, 6 - index),
   }))
 
   return (

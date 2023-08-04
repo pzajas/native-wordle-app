@@ -1,5 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+export interface ITheme {
+  primaryColor: string
+  secondaryColor: string
+  primaryTextColor: string
+  normal: string
+  focused: string
+  match: string
+  present: string
+  white: string
+  black: string
+  green: string
+  red: string
+}
+
 const themePresets = {
   dark: {
     primaryColor: '#181818',

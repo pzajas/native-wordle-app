@@ -1,72 +1,47 @@
 /* eslint-disable indent */
 import { Controller, useForm } from 'react-hook-form'
 import { useState } from 'react'
-import { theme } from '../src/styles/theme'
-import {
-  View,
-  TextInput,
-  NativeSyntheticEvent,
-  TextInputKeyPressEventData,
-} from 'react-native'
+import { View, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native'
 import { createToast, handleWordExist } from '../funcs/helpers'
-import { FormValues, UserInputProps } from '../src/typescript/types'
+import { FormValues, IRootState, UserInputProps } from '../src/typescript/types'
 import { useDispatch, useSelector } from 'react-redux'
-import { incrementWins } from '../src/redux/features/winCounterSlice'
-import { incrementLoses } from '../src/redux/features/loseCounterSlice'
+import { setGameResult, setIsModalvisible, setIsSubmitting } from '../src/redux/features/booleanSlice'
+import { setModalText } from '../src/redux/features/stringsSlice'
 import {
-  incrementWinsInRow,
-  resetWinsInRow,
-} from '../src/redux/features/winsInRowSlice'
-import { addChanceNumber } from '../src/redux/features/winsInTrySlice'
-import { getStyles } from '../src/styles/styles'
-
-const UserInput = ({
-  rowId,
-  randomWord,
-  firstRef,
-  name,
-  guess,
-  setGuess,
-  isSubmitted,
-  setIsSubmitted,
-  chanceCounter,
+  resetChanceCounter,
   setChanceCounter,
-  setGameResult,
-  setIsSubmitting,
-  setModalVisible,
-  setModalText,
-}: UserInputProps) => {
+  incrementWins,
+  incrementLoses,
+  incrementWinsInTry,
+} from '../src/redux/features/numbersSlice'
+
+const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitted }: UserInputProps) => {
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
 
-  const word: string = randomWord[0]
-  const dispatch = useDispatch()
-
+  const { chanceCounter } = useSelector((state: IRootState) => state.numbers)
   const { register, control } = useForm<FormValues>()
 
-  const theme = useSelector((state) => state.theme) // Access the current theme from the Redux store.
+  const randomWord = useSelector((state: IRootState) => state.strings.randomWord[0])
+  const theme = useSelector((state: IRootState) => state.theme)
+  const dispatch = useDispatch()
 
   const handleCheck = (text: string) => {
     if (text) {
       const updatedGuess = [...guess, text.toUpperCase()]
       setGuess(updatedGuess)
       for (let i = 0; i < updatedGuess.length; i++) {
-        updatedGuess[i]?.toUpperCase() &&
-        word[i] === updatedGuess[i].toUpperCase()
+        updatedGuess[i]?.toUpperCase() && randomWord[i] === updatedGuess[i].toUpperCase()
           ? setIsMatch(true)
           : setIsMatch(false)
       }
 
-      updatedGuess && word.includes(text.toUpperCase())
-        ? setIsPresent(true)
-        : setIsPresent(false)
+      updatedGuess && randomWord.includes(text.toUpperCase()) ? setIsPresent(true) : setIsPresent(false)
     }
   }
 
-  const handleKeyPress = (
-    e: NativeSyntheticEvent<TextInputKeyPressEventData>
-  ) => {
+  const handleKeyPress = (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
     if (e.nativeEvent.key === 'Backspace') {
       setGuess((prevGuess: string[]) => prevGuess.slice(0, -1))
       setIsPresent(false)
@@ -84,53 +59,48 @@ const UserInput = ({
     setIsFocused(false)
   }
 
-  const handleSubmit = async (
-    e: NativeSyntheticEvent<TextInputKeyPressEventData>
-  ) => {
+  const handleSubmit = async (e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
     e.persist()
-    setIsSubmitting(true)
+    dispatch(setIsSubmitting(true))
 
     try {
       const response = await handleWordExist(guess)
       const userWord = guess.join('')
 
-      const isProperWord =
-        response && response.status === 200 && guess.length === 5
+      const isProperWord = response && response.status === 200 && guess.length === 5
 
       if (guess.length === 5 && isProperWord) {
         setIsSubmitted(true)
-        setChanceCounter((prevState: number) => prevState + 1)
+        dispatch(setChanceCounter(chanceCounter + 1))
       }
 
       if (e?.nativeEvent?.key === 'Enter' && !isProperWord) {
         createToast(guess)
       }
 
-      if (chanceCounter === 6 && word !== userWord) {
+      if (chanceCounter === 6 && randomWord !== userWord) {
         dispatch(incrementLoses())
-        dispatch(resetWinsInRow())
-        setModalText('GAME OVER')
-        setModalVisible(true)
-        setGameResult(false)
+        dispatch(resetChanceCounter())
+        dispatch(setModalText('GAME OVER'))
+        dispatch(setIsModalvisible(true))
+        dispatch(setGameResult(false))
       }
 
-      if (rowId === 6 && response?.status !== 200) {
-        setModalVisible(false)
-        setGameResult(false)
-      }
-
-      if (word === userWord) {
-        dispatch(incrementWins())
-        dispatch(incrementWinsInRow())
-        dispatch(addChanceNumber(chanceCounter))
-        setModalText('YOU WON')
-        setModalVisible(true)
-        setGameResult(true)
+      if (randomWord === userWord) {
+        handleInputBlur()
+        setTimeout(() => {
+          dispatch(incrementWins())
+          dispatch(incrementWinsInTry(chanceCounter))
+          dispatch(resetChanceCounter())
+          dispatch(setModalText('YOU WON'))
+          dispatch(setIsModalvisible(true))
+          dispatch(setGameResult(true))
+        }, 1000)
       }
     } catch (error) {
       console.error('Error occurred during API call:', error)
     }
-    setIsSubmitting(false)
+    dispatch(setIsSubmitting(false))
   }
 
   return (
@@ -169,7 +139,7 @@ const UserInput = ({
               textTransform: 'uppercase',
               fontWeight: '800',
               fontSize: 20,
-              outline: 'none',
+              // outline: 'none',
               borderRadius: 5,
             }}
             onChangeText={(text) => {

@@ -23,16 +23,9 @@ const ContentOptions = () => {
 
   return (
     <View>
-      <View
-        style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}
-      >
-        <Text style={{ color: theme.primaryTextColor, marginRight: 15 }}>
-          {colorMode}
-        </Text>
-        <Switch
-          value={theme.primaryColor === theme.white}
-          onValueChange={handleThemeToggle}
-        />
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+        <Text style={{ color: theme.primaryTextColor, marginRight: 15 }}>{colorMode}</Text>
+        <Switch value={theme.primaryColor === theme.white} onValueChange={handleThemeToggle} />
       </View>
     </View>
   )

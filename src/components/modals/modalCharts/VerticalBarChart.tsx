@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux'
 import { VictoryChart, VictoryBar, VictoryAxis } from 'victory-native'
 
 export const VerticalBarChart = ({ text }: { text: string }) => {
-  const wins: number = useSelector((state: any) => state.wins)
-  const loses: number = useSelector((state: any) => state.loses)
+  const { wins, loses }: { wins: number; loses: number } = useSelector((state: any) => state.numbers)
 
   const theme = useSelector((state) => state.theme)
 
