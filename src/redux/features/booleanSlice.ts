@@ -1,15 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface IBoolean {
-  gameResult: false
-  isSubmitting: false
-  isModalVisible: false
+  gameResult: boolean
+  isSubmitting: boolean
+  isModalVisible: boolean
+  isColorBlindModeOn: boolean
 }
 
 const initialState = {
   gameResult: false,
   isSubmitting: false,
   isModalVisible: false,
+  isColorBlindModeOn: true,
 }
 
 const slice = createSlice({
@@ -25,8 +27,11 @@ const slice = createSlice({
     setIsModalvisible: (state, action) => {
       state.isModalVisible = action.payload
     },
+    setIsColorBlindModeOn: (state, action) => {
+      state.isColorBlindModeOn = action.payload
+    },
   },
 })
 
-export const { setGameResult, setIsSubmitting, setIsModalvisible } = slice.actions
+export const { setGameResult, setIsSubmitting, setIsModalvisible, setIsColorBlindModeOn } = slice.actions
 export default slice.reducer
