@@ -15,23 +15,7 @@ export type WordExampleProps = {
   letters: LettersArray[]
 }
 
-export type LettersArray =
-  | 'P'
-  | 'A'
-  | 'R'
-  | 'S'
-  | 'I'
-  | 'C'
-  | 'L'
-  | 'O'
-  | 'W'
-  | 'N'
-  | 'M'
-  | 'O'
-  | 'T'
-  | 'E'
-  | 'S'
-  | 'Z'
+export type LettersArray = 'P' | 'A' | 'R' | 'S' | 'I' | 'C' | 'L' | 'O' | 'W' | 'N' | 'M' | 'O' | 'T' | 'E' | 'S' | 'Z'
 
 export interface UserInputsProps {
   rowId: number
@@ -41,7 +25,6 @@ export interface UserInputsProps {
 
 export interface UserInputProps {
   name: string
-  rowId: number
   isSubmitted: boolean
   guess: string[]
   setIsSubmitted: Dispatch<SetStateAction<boolean>>

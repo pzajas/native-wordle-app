@@ -11,9 +11,9 @@ const UserInputs = ({ rowId, handleGameReset }: UserInputsProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false)
 
   const { chanceCounter } = useSelector((state: IRootState) => state.numbers)
-  const selectedTheme = useSelector((state: IRootState) => state.theme)
+  const theme = useSelector((state: IRootState) => state.theme)
 
-  const styles = getStyles(selectedTheme)
+  const styles = getStyles(theme)
 
   const firstRef: TextInputRef = useRef(null)
   const secondRef: TextInputRef = useRef(null)
@@ -38,7 +38,6 @@ const UserInputs = ({ rowId, handleGameReset }: UserInputsProps) => {
   }, [guess.length, chanceCounter, rowId])
 
   const userInputProps = {
-    rowId: rowId,
     guess: guess,
     setGuess: setGuess,
     isSubmitted: isSubmitted,

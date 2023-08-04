@@ -9,7 +9,7 @@ import { ContentStatistics } from '../src/components/modals/modalContents/Conten
 import { getStyles } from '../src/styles/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { setRandomWord } from '../src/redux/features/stringsSlice'
-import { setChanceCounter, setResetKey } from '../src/redux/features/numbersSlice'
+import { resetChanceCounter, setChanceCounter, setResetKey } from '../src/redux/features/numbersSlice'
 import { setIsSubmitting } from '../src/redux/features/booleanSlice'
 import { IRootState } from '../src/typescript/types'
 
@@ -21,10 +21,9 @@ export const App = () => {
   const { randomWord, modalText } = useSelector((state: IRootState) => state.strings)
   const { chanceCounter, resetKey } = useSelector((state: IRootState) => state.numbers)
   const { isSubmitting, isModalVisible } = useSelector((state: IRootState) => state.boolean)
+  const theme = useSelector((state: IRootState) => state.theme)
 
   const dispatch = useDispatch()
-
-  const theme = useSelector((state: IRootState) => state.theme)
   const styles = getStyles(theme)
 
   const handleGameReset = () => {
@@ -40,10 +39,11 @@ export const App = () => {
   })
 
   useEffect(() => {
+    dispatch(resetChanceCounter())
     void fetchData(dispatch, setRandomWord)
   }, [])
 
-  console.log(randomWord, chanceCounter)
+  console.log(randomWord)
 
   if (!fontLoaded) {
     return null

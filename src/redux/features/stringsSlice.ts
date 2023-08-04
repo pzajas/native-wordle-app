@@ -20,6 +20,9 @@ const slice = createSlice({
     setModalText: (state, action) => {
       state.modalText = action.payload
     },
+    setThemeName: (state, action) => {
+      return action.payload
+    },
   },
 })
 
