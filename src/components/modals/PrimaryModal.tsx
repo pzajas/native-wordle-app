@@ -35,7 +35,7 @@ export const PrimaryModal = ({ handleGameReset, children }: IPrimaryModal) => {
             <Pressable
               style={[styles.primaryModalButton, styles.primaryModalButtonClose]}
               onPress={() => {
-                if (modalText === 'INFORMATION' || modalText === 'STATISTICS' || modalText === 'STATISTICS') {
+                if (modalText === 'INFORMATION' || modalText === 'STATISTICS' || modalText === 'OPTIONS') {
                   dispatch(setIsModalvisible(!isModalVisible))
                 } else {
                   dispatch(setIsModalvisible(!isModalVisible))
