@@ -19,7 +19,7 @@ import ContentOptions from '../src/components/modals/modalContents/ContentOption
 
 export const App = () => {
   const { randomWord, modalText } = useSelector((state: IRootState) => state.strings)
-  const { chanceCounter, resetKey } = useSelector((state: IRootState) => state.numbers)
+  const { resetKey } = useSelector((state: IRootState) => state.numbers)
   const { isSubmitting, isModalVisible } = useSelector((state: IRootState) => state.boolean)
   const theme = useSelector((state: IRootState) => state.theme)
 
