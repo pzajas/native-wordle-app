@@ -15,7 +15,7 @@ import {
   incrementWinsInTry,
 } from '../src/redux/features/numbersSlice'
 
-const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitted }: UserInputProps) => {
+const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitted, rowId }: UserInputProps) => {
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
@@ -118,6 +118,8 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
             {...register(name)}
             ref={firstRef}
             caretHidden
+            focusable={rowId === chanceCounter}
+            editable={rowId === chanceCounter}
             onBlur={handleInputBlur}
             blurOnSubmit={false}
             style={{
@@ -148,7 +150,6 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
             onKeyPress={handleKeyPress}
             onFocus={handleInputFocus}
             onSubmitEditing={handleSubmit}
-            editable={!isSubmitted}
             maxLength={1}
             returnKeyType="default"
             autoCapitalize="characters"

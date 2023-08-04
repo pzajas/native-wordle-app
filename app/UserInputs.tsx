@@ -38,6 +38,7 @@ const UserInputs = ({ rowId, handleGameReset }: UserInputsProps) => {
   }, [guess.length, chanceCounter, rowId])
 
   const userInputProps = {
+    rowId: rowId,
     guess: guess,
     setGuess: setGuess,
     isSubmitted: isSubmitted,
