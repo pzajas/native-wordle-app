@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     height: '100%',
-    backgroundColor: theme.colors.black,
+    backgroundColor: '#181818',
     fontWeight: 600,
   },
   customText: {
