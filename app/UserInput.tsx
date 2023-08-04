@@ -21,6 +21,8 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
   const [isFocused, setIsFocused] = useState(false)
 
   const { chanceCounter } = useSelector((state: IRootState) => state.numbers)
+  const { isColorBlindModeOn } = useSelector((state: IRootState) => state.boolean)
+
   const { register, control } = useForm<FormValues>()
 
   const randomWord = useSelector((state: IRootState) => state.strings.randomWord[0])
@@ -128,7 +130,11 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
               backgroundColor: isFocused
                 ? theme.focused
                 : isSubmitted
-                ? isMatch
+                ? isMatch && isColorBlindModeOn
+                  ? theme.matchColorBlind
+                  : isPresent && isColorBlindModeOn
+                  ? theme.presentColorBlind
+                  : isMatch
                   ? theme.match
                   : isPresent
                   ? theme.present

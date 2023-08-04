@@ -12,6 +12,8 @@ export interface ITheme {
   black: string
   green: string
   red: string
+  matchColorBlind: string
+  presentColorBlind: string
 }
 
 const themePresets = {
@@ -25,6 +27,9 @@ const themePresets = {
     focused: '#252525',
     match: '#548c4c',
     present: '#b49c3c',
+
+    matchColorBlind: '#f17e2d',
+    presentColorBlind: '#3f94e9',
 
     white: '#fff',
     black: '#181818',
@@ -41,6 +46,9 @@ const themePresets = {
     focused: '#f2f2f2',
     match: '#548c4c',
     present: '#b49c3c',
+
+    matchColorBlind: '#f17e2d',
+    presentColorBlind: '#3f94e9',
 
     white: '#fff',
     black: '#181818',
