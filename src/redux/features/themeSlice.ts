@@ -11,7 +11,6 @@ export interface ITheme {
   white: string
   black: string
   green: string
-  red: string
   matchColorBlind: string
   presentColorBlind: string
 }
@@ -31,18 +30,20 @@ const themePresets = {
     matchColorBlind: '#f17e2d',
     presentColorBlind: '#3f94e9',
 
+    buttonBackgroundColor: '#3c3c3c',
+    buttonBorderColor: '#181818',
+
     white: '#fff',
     black: '#181818',
     green: '#548c4c',
-    red: 'red',
   },
   light: {
-    primaryColor: '#fff',
-    secondaryColor: 'grey',
+    primaryColor: '#eef2f3',
+    secondaryColor: '#999999',
 
     primaryTextColor: 'rgba(55,55,55,255)',
 
-    normal: 'grey',
+    normal: '#3c3c3c',
     focused: '#f2f2f2',
     match: '#548c4c',
     present: '#b49c3c',
@@ -50,10 +51,12 @@ const themePresets = {
     matchColorBlind: '#f17e2d',
     presentColorBlind: '#3f94e9',
 
-    white: '#fff',
+    buttonBackgroundColor: '#ffff',
+    buttonBorderColor: '#999999',
+
+    white: '#eef2f3',
     black: '#181818',
     green: '#548c4c',
-    red: 'red',
   },
 }
 

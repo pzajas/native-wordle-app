@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setTheme } from '../../../redux/features/themeSlice'
 import { setIsColorBlindModeOn } from '../../../redux/features/booleanSlice'
 
-const ContentOptions = () => {
+export const ContentOptions = () => {
   const { isColorBlindModeOn } = useSelector((state) => state.boolean)
 
   const theme = useSelector((state) => state.theme)
@@ -35,5 +35,3 @@ const ContentOptions = () => {
     </View>
   )
 }
-
-export default ContentOptions

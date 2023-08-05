@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface IStrings {
   randomWord: string
   modalText: string
+  language: string
 }
 
 const initialState: IStrings = {
   randomWord: '',
   modalText: '',
+  language: 'GB',
 }
 
 const slice = createSlice({
@@ -20,11 +22,11 @@ const slice = createSlice({
     setModalText: (state, action) => {
       state.modalText = action.payload
     },
-    setThemeName: (state, action) => {
-      return action.payload
+    setLanguage: (state, action) => {
+      state.language = action.payload
     },
   },
 })
 
-export const { setRandomWord, setModalText } = slice.actions
+export const { setRandomWord, setModalText, setLanguage } = slice.actions
 export default slice.reducer

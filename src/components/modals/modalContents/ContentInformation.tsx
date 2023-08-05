@@ -21,10 +21,7 @@ const ContentText = ({ children }: { children: string }) => {
         marginBottom: 20,
       }}
     >
-      <Text style={{ fontWeight: 'bold', color: theme.present }}>
-        {firstWord}
-      </Text>{' '}
-      {restOfWords}
+      <Text style={{ fontWeight: 'bold', color: theme.present }}>{firstWord}</Text> {restOfWords}
     </Text>
   )
 }
@@ -37,12 +34,7 @@ const Letters = ({ letter }: { letter: string }) => {
       style={[
         styles.modalInformationLetter,
         {
-          backgroundColor:
-            letter === 'P'
-              ? theme.match
-              : letter === 'W'
-              ? theme.present
-              : 'grey',
+          backgroundColor: letter === 'P' ? theme.match : letter === 'W' ? theme.present : 'grey',
           marginBottom: 3,
           marginRight: 1,
         },

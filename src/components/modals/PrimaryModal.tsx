@@ -3,7 +3,6 @@ import { IPrimaryModal, IRootState } from '../../typescript/types'
 import { useDispatch, useSelector } from 'react-redux'
 import { getStyles } from '../../styles/styles'
 import { setGameResult, setIsModalvisible } from '../../redux/features/booleanSlice'
-import { IStrings } from '../../redux/features/stringsSlice'
 
 export const PrimaryModal = ({ handleGameReset, children }: IPrimaryModal) => {
   const theme = useSelector((state) => state.theme)
@@ -35,7 +34,12 @@ export const PrimaryModal = ({ handleGameReset, children }: IPrimaryModal) => {
             <Pressable
               style={[styles.primaryModalButton, styles.primaryModalButtonClose]}
               onPress={() => {
-                if (modalText === 'INFORMATION' || modalText === 'STATISTICS' || modalText === 'OPTIONS') {
+                if (
+                  modalText === 'INFORMATION' ||
+                  modalText === 'STATISTICS' ||
+                  modalText === 'OPTIONS' ||
+                  modalText === 'LANGUAGES'
+                ) {
                   dispatch(setIsModalvisible(!isModalVisible))
                 } else {
                   dispatch(setIsModalvisible(!isModalVisible))

@@ -58,10 +58,19 @@ export const getStyles = (theme) =>
       backgroundColor: theme.primaryColor,
       borderBottomColor: theme.secondaryColor,
       borderBottomWidth: 1,
+      paddingLeft: 60,
+      paddingRight: 60,
     },
     navbarButtons: {
       flexDirection: 'row',
-      gap: 15,
+      gap: 5,
+    },
+    navbarButton: {
+      padding: 8,
+      backgroundColor: theme.buttonBackgroundColor,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: theme.buttonBorderColor,
     },
     navbarTitle: {
       color: theme.primaryTextColor,
@@ -140,6 +149,40 @@ export const getStyles = (theme) =>
     },
     statisticsModalText: {
       color: theme.primaryColor,
+      fontWeight: 'bold',
+    },
+
+    // LANGUAGES
+
+    languagesContainer: {
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      width: 350,
+    },
+    languagesListContainer: {
+      flexGrow: 1,
+      flexDirection: 'column',
+      padding: 4,
+    },
+    languagesItem: {
+      flex: 1,
+      flexDirection: 'row',
+      padding: 10,
+      backgroundColor: theme.buttonBackgroundColor,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      margin: 4,
+      borderRadius: 8,
+    },
+    languagesItemImage: {
+      width: 30,
+      height: 30,
+      marginRight: 10,
+      borderRadius: 8,
+    },
+    languagesItemText: {
+      color: theme.primaryTextColor,
       fontWeight: 'bold',
     },
   })
