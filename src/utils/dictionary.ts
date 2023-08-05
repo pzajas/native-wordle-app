@@ -14,8 +14,7 @@ export const informationModal = {
 }
 
 export const iconNames = {
-  COG: 'cog',
-  GITHUB: 'github',
-  QUESTION: 'question-circle',
-  USER: 'user-circle',
+  COG: 'settings-outline',
+  QUESTION: 'help-outline',
+  USER: 'bar-chart-outline',
 }
