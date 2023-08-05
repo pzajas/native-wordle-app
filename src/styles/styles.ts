@@ -1,4 +1,8 @@
 import { StyleSheet } from 'react-native'
+import { Dimensions } from 'react-native'
+
+const windowHeight = Dimensions.get('window').height
+const windowWidth = Dimensions.get('window').width
 
 export const getStyles = (theme) =>
   StyleSheet.create({
@@ -13,7 +17,6 @@ export const getStyles = (theme) =>
       color: theme.secondaryColor,
     },
     appFlatList: {
-      marginTop: 60,
       height: '100%',
       gap: 5,
     },
@@ -52,14 +55,14 @@ export const getStyles = (theme) =>
     navbarContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-between',
-      height: 80,
-      width: '100%',
+      justifyContent: 'center',
+      height: windowHeight * 0.1,
+      width: 270,
+      marginBottom: 10,
       backgroundColor: theme.primaryColor,
       borderBottomColor: theme.secondaryColor,
-      borderBottomWidth: 1,
-      paddingLeft: 60,
-      paddingRight: 60,
+      marginLeft: (windowWidth - 270) / 2,
+      marginRight: (windowWidth - 270) / 2,
     },
     navbarButtons: {
       flexDirection: 'row',

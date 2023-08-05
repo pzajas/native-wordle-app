@@ -18,7 +18,7 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
-  const [isManyLetters, setIsManyLetters] = useState(0)
+  const [isMultipleLetters, setIsMultipleLetters] = useState(0)
 
   const { chanceCounter } = useSelector((state: IRootState) => state.numbers)
   const { isColorBlindModeOn, isMultipleLettersMode } = useSelector((state: IRootState) => state.boolean)
@@ -46,7 +46,7 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
     }
 
     if (textOccurrences.length > 1) {
-      setIsManyLetters(textOccurrences.length)
+      setIsMultipleLetters(textOccurrences.length)
     }
   }
 
@@ -112,8 +112,6 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
     dispatch(setIsSubmitting(false))
   }
 
-  console.log(isManyLetters)
-
   return (
     <View
       style={{
@@ -169,7 +167,7 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
               returnKeyType="default"
               autoCapitalize="characters"
             />
-            {isSubmitted && isManyLetters > 1 && isMultipleLettersMode && (
+            {isSubmitted && isMultipleLetters > 1 && isMultipleLettersMode && (
               <View
                 style={{
                   position: 'absolute',
@@ -177,7 +175,7 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
                   bottom: 3,
                 }}
               >
-                <Text style={{ color: 'white', fontSize: 10 }}>{isManyLetters}</Text>
+                <Text style={{ color: 'white', fontSize: 10 }}>{isMultipleLetters}</Text>
               </View>
             )}
           </View>
