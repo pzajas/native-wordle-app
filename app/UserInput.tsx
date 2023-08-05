@@ -1,7 +1,6 @@
-/* eslint-disable indent */
 import { Controller, useForm } from 'react-hook-form'
 import { useState } from 'react'
-import { View, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native'
+import { View, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, Text } from 'react-native'
 import { createToast, handleWordExist } from '../funcs/helpers'
 import { FormValues, IRootState, UserInputProps } from '../src/typescript/types'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,20 +18,24 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
   const [isMatch, setIsMatch] = useState(false)
   const [isPresent, setIsPresent] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
+  const [isManyLetters, setIsManyLetters] = useState(0)
 
   const { chanceCounter } = useSelector((state: IRootState) => state.numbers)
-  const { isColorBlindModeOn } = useSelector((state: IRootState) => state.boolean)
+  const { isColorBlindModeOn, isMultipleLettersMode } = useSelector((state: IRootState) => state.boolean)
 
-  const { register, control } = useForm<FormValues>()
+  const { control } = useForm<FormValues>()
 
   const randomWord = useSelector((state: IRootState) => state.strings.randomWord[0])
   const theme = useSelector((state: IRootState) => state.theme)
   const dispatch = useDispatch()
 
   const handleCheck = (text: string) => {
+    const textOccurrences = randomWord.split('').filter((char) => char.toUpperCase() === text.toUpperCase())
+
     if (text) {
       const updatedGuess = [...guess, text.toUpperCase()]
       setGuess(updatedGuess)
+
       for (let i = 0; i < updatedGuess.length; i++) {
         updatedGuess[i]?.toUpperCase() && randomWord[i] === updatedGuess[i].toUpperCase()
           ? setIsMatch(true)
@@ -40,6 +43,10 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
       }
 
       updatedGuess && randomWord.includes(text.toUpperCase()) ? setIsPresent(true) : setIsPresent(false)
+    }
+
+    if (textOccurrences.length > 1) {
+      setIsManyLetters(textOccurrences.length)
     }
   }
 
@@ -105,6 +112,8 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
     dispatch(setIsSubmitting(false))
   }
 
+  console.log(isManyLetters)
+
   return (
     <View
       style={{
@@ -115,51 +124,63 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
       <Controller
         name={name}
         control={control}
-        render={() => (
-          <TextInput
-            {...register(name)}
-            ref={firstRef}
-            caretHidden
-            focusable={rowId === chanceCounter}
-            editable={rowId === chanceCounter}
-            onBlur={handleInputBlur}
-            blurOnSubmit={false}
-            style={{
-              width: 50,
-              height: 50,
-              backgroundColor: isFocused
-                ? theme.focused
-                : isSubmitted
-                ? isMatch && isColorBlindModeOn
-                  ? theme.matchColorBlind
-                  : isPresent && isColorBlindModeOn
-                  ? theme.presentColorBlind
-                  : isMatch
-                  ? theme.match
-                  : isPresent
-                  ? theme.present
-                  : theme.secondaryColor
-                : theme.primaryColor,
-              color: isSubmitted ? theme.white : theme.primaryTextColor,
-              textAlign: 'center',
-              borderColor: 'grey',
-              borderWidth: 1,
-              textTransform: 'uppercase',
-              fontWeight: '800',
-              fontSize: 20,
-              // outline: 'none',
-              borderRadius: 5,
-            }}
-            onChangeText={(text) => {
-              handleCheck(text)
-            }}
-            onKeyPress={handleKeyPress}
-            onFocus={handleInputFocus}
-            onSubmitEditing={handleSubmit}
-            maxLength={1}
-            returnKeyType="default"
-            autoCapitalize="characters"
-          />
+        render={({ field }) => (
+          <View style={{ position: 'relative' }}>
+            <TextInput
+              {...field}
+              ref={firstRef}
+              caretHidden
+              focusable={rowId === chanceCounter}
+              editable={rowId === chanceCounter}
+              onBlur={handleInputBlur}
+              blurOnSubmit={false}
+              style={{
+                width: 50,
+                height: 50,
+                backgroundColor: isFocused
+                  ? theme.focused
+                  : isSubmitted
+                  ? isMatch && isColorBlindModeOn
+                    ? theme.matchColorBlind
+                    : isPresent && isColorBlindModeOn
+                    ? theme.presentColorBlind
+                    : isMatch
+                    ? theme.match
+                    : isPresent
+                    ? theme.present
+                    : theme.secondaryColor
+                  : theme.primaryColor,
+                color: isSubmitted ? theme.white : theme.primaryTextColor,
+                textAlign: 'center',
+                borderColor: 'grey',
+                borderWidth: 1,
+                textTransform: 'uppercase',
+                fontWeight: '800',
+                fontSize: 20,
+                borderRadius: 5,
+              }}
+              onChangeText={(text) => {
+                handleCheck(text)
+              }}
+              onKeyPress={handleKeyPress}
+              onFocus={handleInputFocus}
+              onSubmitEditing={handleSubmit}
+              maxLength={1}
+              returnKeyType="default"
+              autoCapitalize="characters"
+            />
+            {isSubmitted && isManyLetters > 1 && isMultipleLettersMode && (
+              <View
+                style={{
+                  position: 'absolute',
+                  right: 6,
+                  bottom: 3,
+                }}
+              >
+                <Text style={{ color: 'white', fontSize: 10 }}>{isManyLetters}</Text>
+              </View>
+            )}
+          </View>
         )}
         rules={{
           required: true,

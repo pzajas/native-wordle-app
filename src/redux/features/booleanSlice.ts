@@ -5,13 +5,15 @@ export interface IBoolean {
   isSubmitting: boolean
   isModalVisible: boolean
   isColorBlindModeOn: boolean
+  isMultipleLettersMode: boolean
 }
 
 const initialState = {
   gameResult: false,
   isSubmitting: false,
   isModalVisible: false,
-  isColorBlindModeOn: true,
+  isColorBlindModeOn: false,
+  isMultipleLettersMode: false,
 }
 
 const slice = createSlice({
@@ -30,8 +32,17 @@ const slice = createSlice({
     setIsColorBlindModeOn: (state, action) => {
       state.isColorBlindModeOn = action.payload
     },
+    setShowMultipleLettersIndicator: (state, action) => {
+      state.isMultipleLettersMode = action.payload
+    },
   },
 })
 
-export const { setGameResult, setIsSubmitting, setIsModalvisible, setIsColorBlindModeOn } = slice.actions
+export const {
+  setGameResult,
+  setIsSubmitting,
+  setIsModalvisible,
+  setIsColorBlindModeOn,
+  setShowMultipleLettersIndicator,
+} = slice.actions
 export default slice.reducer
