@@ -1,5 +1,5 @@
 import { Image, Text, TouchableOpacity, View } from 'react-native'
-import { FontAwesome5 as Icon } from '@expo/vector-icons'
+import { Ionicons as Icon } from '@expo/vector-icons'
 import { useSelector } from 'react-redux'
 import { getStyles } from '../../styles/styles'
 
