@@ -4,8 +4,6 @@ import { useFonts } from 'expo-font'
 import { fetchData } from '../funcs/helpers'
 import { PrimaryNavbar } from '../src/components/navbars/PrimaryNavbar'
 import { PrimaryModal } from '../src/components/modals/PrimaryModal'
-import { ContentInformation } from '../src/components/modals/modalContents/ContentInformation'
-import { ContentStatistics } from '../src/components/modals/modalContents/ContentStatistics'
 import { getStyles } from '../src/styles/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { setRandomWord } from '../src/redux/features/stringsSlice'
@@ -13,9 +11,15 @@ import { resetChanceCounter, setChanceCounter, setResetKey } from '../src/redux/
 import { setIsSubmitting } from '../src/redux/features/booleanSlice'
 import { IRootState } from '../src/typescript/types'
 
+import {
+  ContentInformation,
+  ContentLanguages,
+  ContentOptions,
+  ContentStatistics,
+} from '../src/components/modals/modalContents/index'
+
 import UserInputs from './UserInputs'
 import FlashMessage from 'react-native-flash-message'
-import ContentOptions from '../src/components/modals/modalContents/ContentOptions'
 
 export const App = () => {
   const { randomWord, modalText } = useSelector((state: IRootState) => state.strings)
@@ -51,7 +55,7 @@ export const App = () => {
 
   return (
     <SafeAreaView style={styles.appWrapper}>
-      <PrimaryNavbar title="WORDY" />
+      <PrimaryNavbar />
       <FlatList
         key={resetKey}
         contentContainerStyle={styles.appFlatList}
@@ -64,9 +68,10 @@ export const App = () => {
         <PrimaryModal handleGameReset={handleGameReset}>
           {modalText === 'INFORMATION' && <ContentInformation />}
           {modalText === 'STATISTICS' && <ContentStatistics />}
+          {modalText === 'OPTIONS' && <ContentOptions />}
+          {modalText === 'LANGUAGES' && <ContentLanguages />}
           {modalText === 'YOU WON' && <ContentStatistics />}
           {modalText === 'GAME OVER' && <ContentStatistics />}
-          {modalText === 'OPTIONS' && <ContentOptions />}
         </PrimaryModal>
       ) : null}
 
