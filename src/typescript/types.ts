@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction, MutableRefObject } from 'react'
 import { TextInput } from 'react-native'
-import { IStrings } from '../redux/features/stringsSlice'
-import { INumbers } from '../redux/features/numbersSlice'
-import { IBoolean } from '../redux/features/booleanSlice'
-import { ITheme } from '../redux/features/themeSlice'
+import { IStrings } from '@redux/features/stringsSlice'
+import { INumbers } from '@redux/features/numbersSlice'
+import { IBoolean } from '@redux/features/booleanSlice'
+import { ITheme } from '@redux/features/themeSlice'
 
 export type TextInputRef = MutableRefObject<TextInput | null>
 

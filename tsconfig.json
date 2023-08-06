@@ -10,13 +10,18 @@
     "noEmit": true,
     "strict": true,
     "target": "esnext",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@redux/*": ["src/redux/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@typescript/*": ["./src/typescript/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@functions/*": ["./funcs/*"]
+    }
   },
-  "exclude": [
-    "node_modules",
-    "babel.config.js",
-    "metro.config.js",
-    "jest.config.js"
-  ],
+  "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"],
   "extends": "expo/tsconfig.base"
 }

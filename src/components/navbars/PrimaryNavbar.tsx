@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { View, Dimensions } from 'react-native'
-import { iconNames } from '../../utils/dictionary'
+import { iconNames } from '@utils/dictionary'
 import { useDispatch, useSelector } from 'react-redux'
-import { getStyles } from '../../styles/styles'
-import { setIsModalvisible } from '../../redux/features/booleanSlice'
-import { setModalText } from '../../redux/features/stringsSlice'
+import { getStyles } from '@styles/styles'
+import { setIsModalvisible } from '@redux/features/booleanSlice'
+import { setModalText } from '@redux/features/stringsSlice'
 
 import NavbarButton from './NavbarButton'
 
