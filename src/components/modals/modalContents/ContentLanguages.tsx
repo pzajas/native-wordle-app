@@ -1,9 +1,9 @@
 import { FlatList, Image, TouchableOpacity, View, Text } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { setLanguage } from '../../../redux/features/stringsSlice'
-import { languagesArray } from '../../../utils/arrays'
-import { getStyles } from '../../../styles/styles'
-import { setIsModalvisible } from '../../../redux/features/booleanSlice'
+import { setLanguage } from '@redux/features/stringsSlice'
+import { languagesArray } from '@utils/arrays'
+import { getStyles } from '@styles/styles'
+import { setIsModalvisible } from '@redux/features/booleanSlice'
 
 export const ContentLanguages = () => {
   const theme = useSelector((state) => state.theme)

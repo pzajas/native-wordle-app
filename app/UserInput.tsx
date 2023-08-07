@@ -1,18 +1,18 @@
 import { Controller, useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { View, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, Text } from 'react-native'
-import { createToast, handleWordExist } from '../funcs/helpers'
-import { FormValues, IRootState, UserInputProps } from '../src/typescript/types'
+import { createToast, handleWordExist } from '@functions/helpers'
+import { FormValues, IRootState, UserInputProps } from '@typescript/types'
 import { useDispatch, useSelector } from 'react-redux'
-import { setGameResult, setIsModalvisible, setIsSubmitting } from '../src/redux/features/booleanSlice'
-import { setModalText } from '../src/redux/features/stringsSlice'
+import { setGameResult, setIsModalvisible, setIsSubmitting } from '@redux/features/booleanSlice'
+import { setModalText } from '@redux/features/stringsSlice'
 import {
   resetChanceCounter,
   setChanceCounter,
   incrementWins,
   incrementLoses,
   incrementWinsInTry,
-} from '../src/redux/features/numbersSlice'
+} from '@redux/features/numbersSlice'
 
 const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitted, rowId }: UserInputProps) => {
   const [isMatch, setIsMatch] = useState(false)
@@ -152,6 +152,7 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
                 textAlign: 'center',
                 borderColor: 'grey',
                 borderWidth: 1,
+                outline: 'none',
                 textTransform: 'uppercase',
                 fontWeight: '800',
                 fontSize: 20,

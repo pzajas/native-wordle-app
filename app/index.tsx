@@ -1,8 +1,8 @@
 import { StyleSheet, SafeAreaView } from 'react-native'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import { store, persistor } from '../src/redux/store/store'
-import { theme } from '../src/styles/theme'
+import { store, persistor } from '@redux/store/store'
+import { theme } from '@styles/theme'
 
 import 'expo-router/entry'
 import App from './App'

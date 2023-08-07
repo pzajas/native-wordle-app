@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from 'react'
 import { View } from 'react-native'
-import { IRootState, TextInputRef, UserInputsProps } from '../src/typescript/types'
+import { IRootState, TextInputRef, UserInputsProps } from '@typescript/types'
 import { useSelector } from 'react-redux'
-import { getStyles } from '../src/styles/styles'
+import { getStyles } from '@styles/styles'
 
 import UserInput from './UserInput'
 

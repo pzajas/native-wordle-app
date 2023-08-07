@@ -1,7 +1,7 @@
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { Ionicons as Icon } from '@expo/vector-icons'
 import { useSelector } from 'react-redux'
-import { getStyles } from '../../styles/styles'
+import { getStyles } from '@styles/styles'
 
 const NavbarButton = ({
   iconName,

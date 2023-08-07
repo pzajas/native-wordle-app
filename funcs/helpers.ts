@@ -1,5 +1,5 @@
 import { showMessage } from 'react-native-flash-message'
-import { CONST } from '../src/utils/constants'
+import { CONST } from '@utils/constants'
 
 import axios from 'axios'
 

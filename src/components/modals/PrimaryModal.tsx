@@ -1,8 +1,8 @@
 import { View, Modal, Text, Pressable, TouchableOpacity } from 'react-native'
-import { IPrimaryModal, IRootState } from '../../typescript/types'
+import { IPrimaryModal, IRootState } from '@typescript/types'
 import { useDispatch, useSelector } from 'react-redux'
-import { getStyles } from '../../styles/styles'
-import { setGameResult, setIsModalvisible } from '../../redux/features/booleanSlice'
+import { getStyles } from '@styles/styles'
+import { setGameResult, setIsModalvisible } from '@redux/features/booleanSlice'
 
 export const PrimaryModal = ({ handleGameReset, children }: IPrimaryModal) => {
   const theme = useSelector((state) => state.theme)

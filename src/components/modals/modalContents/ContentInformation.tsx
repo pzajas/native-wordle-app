@@ -1,10 +1,10 @@
 /* eslint-disable indent */
 import { View, Text } from 'react-native'
 import { FunctionComponent } from 'react'
-import { LettersArray, WordExampleProps } from '../../../typescript/types'
-import { informationModal } from '../../../utils/dictionary'
+import { LettersArray, WordExampleProps } from '@typescript/types'
+import { informationModal } from '@utils/dictionary'
 import { useSelector } from 'react-redux'
-import { getStyles } from '../../../styles/styles'
+import { getStyles } from '@styles/styles'
 
 const ContentText = ({ children }: { children: string }) => {
   const words = children.split(' ')

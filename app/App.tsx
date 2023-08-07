@@ -1,22 +1,22 @@
 import { useEffect } from 'react'
 import { FlatList, View, ActivityIndicator, SafeAreaView } from 'react-native'
 import { useFonts } from 'expo-font'
-import { fetchData } from '../funcs/helpers'
-import { PrimaryNavbar } from '../src/components/navbars/PrimaryNavbar'
-import { PrimaryModal } from '../src/components/modals/PrimaryModal'
-import { getStyles } from '../src/styles/styles'
+import { fetchData } from '@functions/helpers'
+import { PrimaryNavbar } from '@components/navbars/PrimaryNavbar'
+import { PrimaryModal } from '@components/modals/PrimaryModal'
+import { getStyles } from '@styles/styles'
 import { useDispatch, useSelector } from 'react-redux'
-import { setRandomWord } from '../src/redux/features/stringsSlice'
-import { resetChanceCounter, setChanceCounter, setResetKey } from '../src/redux/features/numbersSlice'
-import { setIsSubmitting } from '../src/redux/features/booleanSlice'
-import { IRootState } from '../src/typescript/types'
+import { setRandomWord } from '@redux/features/stringsSlice'
+import { resetChanceCounter, setChanceCounter, setResetKey } from '@redux/features/numbersSlice'
+import { setIsSubmitting } from '@redux/features/booleanSlice'
+import { IRootState } from '@typescript/types'
 
 import {
   ContentInformation,
   ContentLanguages,
   ContentOptions,
   ContentStatistics,
-} from '../src/components/modals/modalContents/index'
+} from '@components/modals/modalContents/index'
 
 import UserInputs from './UserInputs'
 import FlashMessage from 'react-native-flash-message'

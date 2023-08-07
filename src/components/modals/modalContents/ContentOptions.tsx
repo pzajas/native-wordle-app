@@ -1,7 +1,7 @@
 import { View, Text, Switch, FlatList, TouchableOpacity } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { setTheme } from '../../../redux/features/themeSlice'
-import { setIsColorBlindModeOn, setShowMultipleLettersIndicator } from '../../../redux/features/booleanSlice'
+import { setTheme } from '@redux/features/themeSlice'
+import { setIsColorBlindModeOn, setShowMultipleLettersIndicator } from '@redux/features/booleanSlice'
 
 export const ContentOptions = () => {
   const { isColorBlindModeOn, isMultipleLettersMode } = useSelector((state) => state.boolean)
