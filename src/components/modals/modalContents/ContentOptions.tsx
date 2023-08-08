@@ -38,7 +38,12 @@ export const ContentOptions = () => {
       <TouchableOpacity onPress={valueChange}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 8, width: 300 }}>
           <Text style={{ color: theme.primaryTextColor }}>{text}</Text>
-          <Switch value={value} onValueChange={valueChange} />
+          <Switch
+            value={value}
+            onValueChange={valueChange}
+            thumbColor={value ? theme.match : theme.grey}
+            trackColor={{ false: theme.grey, true: theme.present }}
+          />
         </View>
       </TouchableOpacity>
     )
