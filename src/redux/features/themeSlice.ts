@@ -25,7 +25,7 @@ const themePresets = {
     normal: '#3c3c3c',
     focused: '#252525',
     match: '#548c4c',
-    present: '#b49c3c',
+    present: '#deba2a',
 
     matchColorBlind: '#f17e2d',
     presentColorBlind: '#3f94e9',
@@ -36,6 +36,7 @@ const themePresets = {
     white: '#fff',
     black: '#181818',
     green: '#548c4c',
+    grey: '#bdb7b7',
   },
   light: {
     primaryColor: '#eef2f3',
@@ -46,7 +47,7 @@ const themePresets = {
     normal: '#3c3c3c',
     focused: '#f2f2f2',
     match: '#548c4c',
-    present: '#b49c3c',
+    present: '#deba2a',
 
     matchColorBlind: '#f17e2d',
     presentColorBlind: '#3f94e9',
@@ -57,6 +58,7 @@ const themePresets = {
     white: '#eef2f3',
     black: '#181818',
     green: '#548c4c',
+    grey: '#bdb7b7',
   },
 }
 
