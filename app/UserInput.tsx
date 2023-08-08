@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { Controller, useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { View, TextInput, NativeSyntheticEvent, TextInputKeyPressEventData, Text } from 'react-native'
@@ -176,7 +177,7 @@ const UserInput = ({ firstRef, name, guess, setGuess, isSubmitted, setIsSubmitte
                   bottom: 3,
                 }}
               >
-                <Text style={{ color: 'white', fontSize: 10 }}>{isMultipleLetters}</Text>
+                <Text style={{ color: theme.white, fontSize: 10 }}>{isMultipleLetters}</Text>
               </View>
             )}
           </View>

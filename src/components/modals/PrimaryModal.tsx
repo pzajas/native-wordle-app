@@ -12,12 +12,14 @@ export const PrimaryModal = ({ handleGameReset, children }: IPrimaryModal) => {
 
   const styles = getStyles(theme)
 
-  const isShortModal = modalText === 'OPTIONS'
+  const isShortModal = modalText === 'LANGUAGES' || modalText === 'OPTIONS'
+
+  console.log(modalText)
 
   return (
     <Modal animationType="slide" transparent={true} visible={isModalVisible}>
       <View style={[styles.primaryModalCenteredView]}>
-        <View style={[styles.modalView, { height: isShortModal ? '60%' : '100%' }]}>
+        <View style={[styles.modalView, { height: isShortModal ? '80%' : '100%', width: 375 }]}>
           <TouchableOpacity style={[styles.primaryModalTouchableContainer, { outline: 'none' }]}>
             <Text style={styles.primaryModalText}>
               {modalText}:

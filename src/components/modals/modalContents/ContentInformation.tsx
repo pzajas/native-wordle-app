@@ -27,16 +27,34 @@ const ContentText = ({ children }: { children: string }) => {
 }
 
 const Letters = ({ letter }: { letter: string }) => {
+  const { isColorBlindModeOn } = useSelector((state) => state.boolean)
   const theme = useSelector((state) => state.theme)
   const styles = getStyles(theme)
+
+  console.log(theme)
+
   return (
     <View
       style={[
         styles.modalInformationLetter,
         {
-          backgroundColor: letter === 'P' ? theme.match : letter === 'W' ? theme.present : 'grey',
+          backgroundColor:
+            letter === 'N'
+              ? isColorBlindModeOn
+                ? theme.matchColorBlind
+                : theme.match
+              : letter === 'H'
+              ? isColorBlindModeOn
+                ? theme.presentColorBlind
+                : theme.present
+              : theme.primaryColor === '#181818'
+              ? theme.primaryColor
+              : theme.white,
           marginBottom: 3,
           marginRight: 1,
+          borderRadius: 4,
+          borderWidth: 1,
+          borderColor: 'grey',
         },
       ]}
     >
@@ -61,9 +79,7 @@ export const ContentInformation = () => {
   const theme = useSelector((state) => state.theme)
   const styles = getStyles(theme)
 
-  const wordParsi: LettersArray[] = ['P', 'L', 'A', 'Z', 'A']
-  const wordClown: LettersArray[] = ['C', 'L', 'O', 'W', 'N']
-  const wordMotes: LettersArray[] = ['M', 'O', 'T', 'E', 'S']
+  const wordNight: LettersArray[] = ['N', 'I', 'G', 'H', 'T']
 
   return (
     <View style={{ justifyContent: 'space-between' }}>
@@ -71,16 +87,8 @@ export const ContentInformation = () => {
       <ContentText>{informationModal.objective}</ContentText>
       <ContentText>{informationModal.guessing}</ContentText>
 
-      <View style={[styles.modalInformationContainer]}>
-        <WordExample letters={wordParsi} />
-      </View>
-
-      <View style={[styles.modalInformationContainer]}>
-        <WordExample letters={wordClown} />
-      </View>
-
       <View style={[styles.modalInformationContainer, { marginBottom: 20 }]}>
-        <WordExample letters={wordMotes} />
+        <WordExample letters={wordNight} />
       </View>
 
       <ContentText>{informationModal.deduction}</ContentText>

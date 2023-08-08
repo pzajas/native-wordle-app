@@ -15,7 +15,7 @@ export type WordExampleProps = {
   letters: LettersArray[]
 }
 
-export type LettersArray = 'P' | 'A' | 'R' | 'S' | 'I' | 'C' | 'L' | 'O' | 'W' | 'N' | 'M' | 'O' | 'T' | 'E' | 'S' | 'Z'
+export type LettersArray = 'P' | 'A' | 'R' | 'S' | 'I' | 'C' | 'L' | 'O' | 'W' | 'N' | 'M' | 'O' | 'T' | 'E' | 'S' | 'Z' | 'G' |
 
 export interface UserInputsProps {
   rowId: number
