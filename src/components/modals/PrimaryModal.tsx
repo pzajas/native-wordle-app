@@ -5,16 +5,14 @@ import { getStyles } from '@styles/styles'
 import { setGameResult, setIsModalvisible } from '@redux/features/booleanSlice'
 
 export const PrimaryModal = ({ handleGameReset, children }: IPrimaryModal) => {
-  const theme = useSelector((state) => state.theme)
+  const theme = useSelector((state: IRootState) => state.theme)
   const dispatch = useDispatch()
-  const { isModalVisible } = useSelector((state) => state.boolean)
+  const { isModalVisible } = useSelector((state: IRootState) => state.boolean)
   const { modalText, randomWord } = useSelector((state: IRootState) => state.strings)
 
   const styles = getStyles(theme)
 
   const isShortModal = modalText === 'LANGUAGES' || modalText === 'OPTIONS'
-
-  console.log(modalText)
 
   return (
     <Modal animationType="slide" transparent={true} visible={isModalVisible}>

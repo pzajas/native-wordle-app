@@ -1,13 +1,14 @@
+import { IRootState } from '@/typescript/types'
 import { View, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 import { VictoryChart, VictoryBar, VictoryAxis } from 'victory-native'
 
 export const HorizontalBarChart = ({ text }: { text: string }) => {
-  const { winsInTry }: any = useSelector((state: any) => state.numbers)
-  const theme = useSelector((state) => state.theme)
+  const { winsInTry } = useSelector((state: IRootState) => state.numbers)
+  const theme = useSelector((state: IRootState) => state.theme)
 
-  const filterArr = (array: [], number: number) => {
-    const filtered = array.filter((item) => item === number)
+  const filterArr = (arr: number[], value: number) => {
+    const filtered = arr.filter((item) => item === value)
 
     return filtered.length
   }

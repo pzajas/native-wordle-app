@@ -2,6 +2,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { Ionicons as Icon } from '@expo/vector-icons'
 import { useSelector } from 'react-redux'
 import { getStyles } from '@styles/styles'
+import { IRootState } from '@/typescript/types'
 
 const NavbarButton = ({
   iconName,
@@ -14,9 +15,9 @@ const NavbarButton = ({
   flag?: boolean
   onPress: () => void
 }) => {
-  const { language }: { language: string } = useSelector((state) => state.strings)
+  const { language }: { language: string } = useSelector((state: IRootState) => state.strings)
 
-  const theme = useSelector((state) => state.theme)
+  const theme = useSelector((state: IRootState) => state.theme)
   const styles = getStyles(theme)
 
   return (

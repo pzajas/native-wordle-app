@@ -47,8 +47,6 @@ export const App = () => {
     void fetchData(dispatch, setRandomWord)
   }, [])
 
-  console.log(randomWord)
-
   if (!fontLoaded) {
     return null
   }

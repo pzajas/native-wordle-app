@@ -7,13 +7,14 @@ import { setIsModalvisible } from '@redux/features/booleanSlice'
 import { setModalText } from '@redux/features/stringsSlice'
 
 import NavbarButton from './NavbarButton'
+import { IRootState } from '@/typescript/types'
 
 export const PrimaryNavbar = () => {
   const [center, setCenter] = useState(0)
 
-  const { isModalVisible } = useSelector((state) => state.boolean)
+  const { isModalVisible } = useSelector((state: IRootState) => state.boolean)
 
-  const theme = useSelector((state) => state.theme)
+  const theme = useSelector((state: IRootState) => state.theme)
   const styles = getStyles(theme)
   const dispatch = useDispatch()
 
@@ -28,10 +29,6 @@ export const PrimaryNavbar = () => {
   useEffect(() => {
     calculateCenter()
     Dimensions.addEventListener('change', calculateCenter)
-
-    return () => {
-      Dimensions.removeEventListener('change', calculateCenter)
-    }
   }, [])
 
   return (

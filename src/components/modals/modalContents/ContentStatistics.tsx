@@ -3,9 +3,10 @@ import { VerticalBarChart } from '../modalCharts/VerticalBarChart'
 import { HorizontalBarChart } from '../modalCharts/HorizontalBarChart'
 import { useSelector } from 'react-redux'
 import { getStyles } from '@styles/styles'
+import { IRootState } from '@/typescript/types'
 
 export const ContentStatistics = () => {
-  const selectedTheme = useSelector((state) => state.theme)
+  const selectedTheme = useSelector((state: IRootState) => state.theme)
   const styles = getStyles(selectedTheme)
 
   return (

@@ -11,6 +11,7 @@ export interface ITheme {
   white: string
   black: string
   green: string
+  grey: string
   matchColorBlind: string
   presentColorBlind: string
 }

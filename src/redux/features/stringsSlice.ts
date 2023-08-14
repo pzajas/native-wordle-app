@@ -9,7 +9,7 @@ export interface IStrings {
 const initialState: IStrings = {
   randomWord: '',
   modalText: '',
-  language: 'GB',
+  language: 'PL',
 }
 
 const slice = createSlice({
