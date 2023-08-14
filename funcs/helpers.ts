@@ -30,7 +30,7 @@ export const createToast = (userWord) => {
     message: userWord.length < 5 ? 'The word is too short' : 'There is no such word!',
     type: 'danger',
     animated: true,
-    position: 'bottom',
+    position: 'top',
     style: {
       alignItems: 'center',
     },
