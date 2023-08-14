@@ -1,11 +1,12 @@
+import { IRootState } from '@/typescript/types'
 import { View, Text } from 'react-native'
 import { useSelector } from 'react-redux'
 import { VictoryChart, VictoryBar, VictoryAxis } from 'victory-native'
 
 export const VerticalBarChart = ({ text }: { text: string }) => {
-  const { wins, loses }: { wins: number; loses: number } = useSelector((state: any) => state.numbers)
+  const { wins, loses }: { wins: number; loses: number } = useSelector((state: IRootState) => state.numbers)
 
-  const theme = useSelector((state) => state.theme)
+  const theme = useSelector((state: IRootState) => state.theme)
 
   const data = [
     { category: 'games', value: wins + loses },

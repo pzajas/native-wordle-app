@@ -1,6 +1,5 @@
 import { showMessage } from 'react-native-flash-message'
 import { CONST } from '@utils/constants'
-
 import axios from 'axios'
 
 export const fetchData = async (dispatch, setText) => {
@@ -13,11 +12,10 @@ export const fetchData = async (dispatch, setText) => {
   }
 }
 
-export const handleWordExist = async (userWord) => {
+export const handleWordExist = async (userWord: string[]) => {
   try {
-    const response = await axios.get(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${(userWord as string[]).join('')}`
-    )
+    const response = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${userWord.join('')}`)
+
     return response
   } catch (error) {
     createToast(userWord)
@@ -25,7 +23,7 @@ export const handleWordExist = async (userWord) => {
   }
 }
 
-export const createToast = (userWord) => {
+export const createToast = (userWord: string) => {
   showMessage({
     message: userWord.length < 5 ? 'The word is too short' : 'There is no such word!',
     type: 'danger',

@@ -4,9 +4,16 @@ import { setLanguage } from '@redux/features/stringsSlice'
 import { languagesArray } from '@utils/arrays'
 import { getStyles } from '@styles/styles'
 import { setIsModalvisible } from '@redux/features/booleanSlice'
+import { IRootState } from '@/typescript/types'
+
+interface LanguageItem {
+  language: string
+  text: string
+  url: string
+}
 
 export const ContentLanguages = () => {
-  const theme = useSelector((state) => state.theme)
+  const theme = useSelector((state: IRootState) => state.theme)
   const styles = getStyles(theme)
 
   const dispatch = useDispatch()
@@ -16,7 +23,7 @@ export const ContentLanguages = () => {
     dispatch(setIsModalvisible(false))
   }
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: { item: LanguageItem }) => (
     <TouchableOpacity
       style={styles.languagesItem}
       onPress={handleChangeLanguage(item.language)}

@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import { View, Text } from 'react-native'
 import { FunctionComponent } from 'react'
-import { LettersArray, WordExampleProps } from '@typescript/types'
+import { IRootState, LettersArray, WordExampleProps } from '@typescript/types'
 import { informationModal } from '@utils/dictionary'
 import { useSelector } from 'react-redux'
 import { getStyles } from '@styles/styles'
@@ -11,7 +11,7 @@ const ContentText = ({ children }: { children: string }) => {
   const firstWord = words[0]
   const restOfWords = words.slice(1).join(' ')
 
-  const theme = useSelector((state) => state.theme)
+  const theme = useSelector((state: IRootState) => state.theme)
 
   return (
     <Text
@@ -27,11 +27,9 @@ const ContentText = ({ children }: { children: string }) => {
 }
 
 const Letters = ({ letter }: { letter: string }) => {
-  const { isColorBlindModeOn } = useSelector((state) => state.boolean)
-  const theme = useSelector((state) => state.theme)
+  const { isColorBlindModeOn } = useSelector((state: IRootState) => state.boolean)
+  const theme = useSelector((state: IRootState) => state.theme)
   const styles = getStyles(theme)
-
-  console.log(theme)
 
   return (
     <View
@@ -64,7 +62,7 @@ const Letters = ({ letter }: { letter: string }) => {
 }
 
 const WordExample: FunctionComponent<WordExampleProps> = ({ letters }) => {
-  const theme = useSelector((state) => state.theme)
+  const theme = useSelector((state: IRootState) => state.theme)
   const styles = getStyles(theme)
   return (
     <View style={styles.modalInformationContainer}>
@@ -76,7 +74,7 @@ const WordExample: FunctionComponent<WordExampleProps> = ({ letters }) => {
 }
 
 export const ContentInformation = () => {
-  const theme = useSelector((state) => state.theme)
+  const theme = useSelector((state: IRootState) => state.theme)
   const styles = getStyles(theme)
 
   const wordNight: LettersArray[] = ['N', 'I', 'G', 'H', 'T']

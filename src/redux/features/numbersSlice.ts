@@ -28,8 +28,9 @@ const slice = createSlice({
     resetChanceCounter: (state) => {
       state.chanceCounter = initialState.chanceCounter
     },
-    setResetKey: (state) => {
-      state.resetKey += 1
+    setResetKey: (state, action) => {
+      const incrementValue = action.payload || 1
+      state.resetKey += incrementValue
     },
     incrementWins: (state) => {
       state.wins += 1

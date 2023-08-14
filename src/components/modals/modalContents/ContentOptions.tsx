@@ -2,11 +2,18 @@ import { View, Text, Switch, FlatList, TouchableOpacity } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { setTheme } from '@redux/features/themeSlice'
 import { setIsColorBlindModeOn, setShowMultipleLettersIndicator } from '@redux/features/booleanSlice'
+import { IRootState } from '@/typescript/types'
+
+interface ISwitchItem {
+  text: string
+  value: boolean
+  valueChange: () => void
+}
 
 export const ContentOptions = () => {
-  const { isColorBlindModeOn, isMultipleLettersMode } = useSelector((state) => state.boolean)
+  const { isColorBlindModeOn, isMultipleLettersMode } = useSelector((state: IRootState) => state.boolean)
 
-  const theme = useSelector((state) => state.theme)
+  const theme = useSelector((state: IRootState) => state.theme)
   const dispatch = useDispatch()
 
   const handleThemeToggle = () => {
@@ -31,7 +38,7 @@ export const ContentOptions = () => {
     { text: 'Show Multiple Indicator', value: isMultipleLettersMode, valueChange: handleMultipleLettersIndicator },
   ]
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }: { item: ISwitchItem }) => {
     const { text, value, valueChange } = item
 
     return (
